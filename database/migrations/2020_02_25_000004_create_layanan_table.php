@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLayanansTable extends Migration
+class CreateLayananTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,18 @@ class CreateLayanansTable extends Migration
      */
     public function up()
     {
-        Schema::create('layanans', function (Blueprint $table) {
+        Schema::create('layanan', function (Blueprint $table) {
             $table->string('idLayanan');
             $table->primary('idLayanan');
             $table->string('namaLayanan');
-            $table->float('harga');
+            $table->double('harga');
             $table->integer('idJenis')->unsigned();
-            $table->foreign('idJenis')->references('id')->on('jenis_hewans');
+            $table->foreign('idJenis')->references('idJenis')->on('jenisHewan');
             $table->integer('idUkuran')->unsigned();
-            $table->foreign('idUkuran')->references('id')->on('ukuran_hewans');
-            $table->dateTime('created_at');
-            $table->dateTime('updated_at');
-            $table->dateTime('deleted_at');
+            $table->foreign('idUkuran')->references('idUkuran')->on('ukuranHewan');
+            $table->dateTime('created_at')->nullable();
+            $table->dateTime('updated_at')->nullable();
+            $table->dateTime('deleted_at')->nullable();
         });
     }
 
@@ -35,6 +35,6 @@ class CreateLayanansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('layanans');
+        Schema::dropIfExists('layanan');
     }
 }

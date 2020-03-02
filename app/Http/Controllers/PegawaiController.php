@@ -374,12 +374,12 @@ class PegawaiController extends Controller
 
         if (isset($pegawai)) 
         {
-            $noTerakhir=substr($pegawai->NIP,5);
-            return 'P' . date('Y') . ($noTerakhir + 1);
+            $noTerakhir=substr($pegawai->NIP,4);
+            return 'P' . date('y') . '-' .($noTerakhir + 1);
         } 
         else 
         {
-            return 'P' . date('Y') . '1';
+            return 'P' . date('y') . '-1';
         }
     }
 }

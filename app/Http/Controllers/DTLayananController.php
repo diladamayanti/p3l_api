@@ -48,7 +48,6 @@ class DTLayananController extends Controller
         $dt_Layanan->idLayanan = $request['idLayanan'];
         $dt_Layanan->jumlah = $request['jumlah'];
         $dt_Layanan->subTotal = $request['subTotal'];
-        $dt_Layanan->tglTransaksi = Carbon::now();
 
         try{
             $success = $dt_Layanan->save();

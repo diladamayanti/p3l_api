@@ -69,7 +69,7 @@ class HewanController extends Controller
             $status = 200;
             $response = [
                 'status' => 'Success',
-                'data' => $ukuranHewan
+                'data' => $hewan
             ];   
         }
         catch(\Illuminate\Database\QueryException $e){

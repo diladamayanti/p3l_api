@@ -49,7 +49,6 @@ class DTPengadaanController extends Controller
         $dt_Pengadaan->jumlah = $request['jumlah'];
         $dt_Pengadaan->satuan = $request['satuan'];
         $dt_Pengadaan->subTotal = $request['subTotal'];
-        $dt_Pengadaan->tglPengadaan = Carbon::now();
 
         try{
             $success = $dt_Pengadaan->save();

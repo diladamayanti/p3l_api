@@ -48,7 +48,6 @@ class DTProdukController extends Controller
         $dt_Produk->idProduk = $request['idProduk'];
         $dt_Produk->jumlah = $request['jumlah'];
         $dt_Produk->subTotal = $request['subTotal'];
-        $dt_Produk->tglTransaksi = Carbon::now();
 
         try{
             $success = $dt_Produk->save();
