@@ -29,7 +29,7 @@ class SupplierController extends Controller
 
     public function cariSupplier($cari)
     {
-        $supplier = Supplier::where('id','like','%'.$cari.'%','or','namaSupplier','like','%'.$cari.'%')
+        $supplier = Supplier::where('idSupplier','like','%'.$cari.'%','or','namaSupplier','like','%'.$cari.'%')
         ->where('deleted_at',null)->get();
 
         if(sizeof($supplier)==0)

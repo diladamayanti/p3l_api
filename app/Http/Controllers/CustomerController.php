@@ -29,7 +29,7 @@ class CustomerController extends Controller
 
     public function cariCustomer($cari)
     {
-        $customer = Customer::where('id','like','%'.$cari.'%','or','namaCustomer','like','%'.$cari.'%')
+        $customer = Customer::where('idCustomer','like','%'.$cari.'%','or','namaCustomer','like','%'.$cari.'%')
         ->where('deleted_at',null)->get();
 
         if(sizeof($customer)==0)

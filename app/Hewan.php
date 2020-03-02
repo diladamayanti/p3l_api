@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Hewan extends Model
 {
     protected $table = 'hewan';
+    protected $primaryKey = 'idHewan';
 }

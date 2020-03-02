@@ -85,7 +85,7 @@ class LayananController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $layanan = Layanan::where('idLayanan',$id)->get();
+        $layanan = Layanan::find($id);
 
         if($layanan==NULL){
             $status=404;
@@ -95,11 +95,11 @@ class LayananController extends Controller
             ];
         }
         else{
-            $layanan[0]->namaLayanan = $request['namaLayanan'];
-            $layanan[0]->harga = $request['harga'];
-            $layanan[0]->idJenis = $request['idJenis'];
-            $layanan[0]->idUkuran = $request['idUkuran'];
-            $layanan[0]->updated_at = Carbon::now();
+            $layanan->namaLayanan = $request['namaLayanan'];
+            $layanan->harga = $request['harga'];
+            $layanan->idJenis = $request['idJenis'];
+            $layanan->idUkuran = $request['idUkuran'];
+            $layanan->updated_at = Carbon::now();
             
             try{
                 $success = $layanan->save();
@@ -124,7 +124,7 @@ class LayananController extends Controller
 
     public function hapus($id)
     {
-        $layanan = Layanan::where('idLayanan',$id)->get();
+        $layanan = Layanan::find($id);
 
         if($layanan==NULL || $layanan->deleted_at != NULL){
             $status=404;
@@ -135,9 +135,9 @@ class LayananController extends Controller
         }
         else
         {
-            $layanan[0]->created_at = NULL;
-            $layanan[0]->updated_at = NULL;
-            $layanan[0]->deleted_at = Carbon::now();
+            $layanan->created_at = NULL;
+            $layanan->updated_at = NULL;
+            $layanan->deleted_at = Carbon::now();
             $layanan->save();
             $status=200;
             $response = [
@@ -150,7 +150,7 @@ class LayananController extends Controller
 
     public function restore($id)
     {
-        $layanan = Layanan::where('idLayanan',$id)->get();
+        $layanan = Layanan::find($id);
 
         if($layanan==NULL){
             $status=404;
@@ -161,9 +161,9 @@ class LayananController extends Controller
         }
         else
         {
-            $layanan[0]->created_at = Carbon::now();
-            $layanan[0]->updated_at = Carbon::now();
-            $layanan[0]->deleted_at = NULL;
+            $layanan->created_at = Carbon::now();
+            $layanan->updated_at = Carbon::now();
+            $layanan->deleted_at = NULL;
             $layanan->save();
             $status=200;
             $response = [
@@ -176,9 +176,9 @@ class LayananController extends Controller
 
     public function hapusPermanen($id)
     {
-        $layanan = Layanan::where('idLayanan',$id)->get();
+        $layanan = Layanan::find($id);
 
-        if($layanan==NULL || $layanan[0]->deleted_at != NULL){
+        if($layanan==NULL || $layanan->deleted_at != NULL){
             $status=404;
             $response = [
                 'status' => 'Data Not Found',

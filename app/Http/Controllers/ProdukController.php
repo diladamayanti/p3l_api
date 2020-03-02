@@ -110,7 +110,7 @@ class ProdukController extends Controller
 
     public function edit(Request $request, $idProduk)
     {
-        $produk = Produk::where('idProduk',$id)->get();
+        $produk = Produk::find($id);
 
         if($produk==NULL){
             $status=404;
@@ -120,11 +120,11 @@ class ProdukController extends Controller
             ];
         }
         else{
-            $produk[0]->namaProduk = $request['namaProduk'];
-            $produk[0]->harga = $request['harga'];
-            $produk[0]->stok = $request['stok'];
-            $produk[0]->jumlahMinimal = $request['jumlahMinimal'];
-            $produk[0]->updated_at = Carbon::now();
+            $produk->namaProduk = $request['namaProduk'];
+            $produk->harga = $request['harga'];
+            $produk->stok = $request['stok'];
+            $produk->jumlahMinimal = $request['jumlahMinimal'];
+            $produk->updated_at = Carbon::now();
 
             if($_FILES['gambar']['error'] != 4){
                 $produk[0]->gambar= $this->upload();
@@ -136,13 +136,13 @@ class ProdukController extends Controller
                 $response = [
                     'status' => 'Success',
                     'data' => [
-                        'idProduk'=>$produk[0]->idProduk,
-                        'namaProduk'=>$produk[0]->namaProduk,
-                        'harga'=>$produk[0]->harga,
-                        'stok'=>$produk[0]->stok,
-                        'jumlahMinimal'=>$produk[0]->jumlahMinimal,
-                        'created_at'=>$produk[0]->created_at,
-                        'updated_at'=>$produk[0]->updated_at,
+                        'idProduk'=>$produk->idProduk,
+                        'namaProduk'=>$produk->namaProduk,
+                        'harga'=>$produk->harga,
+                        'stok'=>$produk->stok,
+                        'jumlahMinimal'=>$produk->jumlahMinimal,
+                        'created_at'=>$produk->created_at,
+                        'updated_at'=>$produk->updated_at,
                     ]
                 ];  
             }
@@ -160,9 +160,9 @@ class ProdukController extends Controller
 
     public function hapus($id)
     {
-        $produk = Produk::where('idProduk',$id)->get();
+        $produk = Produk::find($id);
 
-        if($produk==NULL || $produk[0]->deleted_at != NULL){
+        if($produk==NULL || $produk->deleted_at != NULL){
             $status=404;
             $response = [
                 'status' => 'Data Not Found',
@@ -171,22 +171,22 @@ class ProdukController extends Controller
         }
         else
         {
-            $produk[0]->created_at = NULL;
-            $produk[0]->updated_at = NULL;
-            $produk[0]->deleted_at = Carbon::now();
+            $produk->created_at = NULL;
+            $produk->updated_at = NULL;
+            $produk->deleted_at = Carbon::now();
             $produk->save();
             $status=200;
             $response = [
                 'status' => 'Success',
                 'data' => [
-                    'idProduk'=>$produk[0]->idProduk,
-                    'namaProduk'=>$produk[0]->namaProduk,
-                    'harga'=>$produk[0]->harga,
-                    'stok'=>$produk[0]->stok,
-                    'jumlahMinimal'=>$produk[0]->jumlahMinimal,
-                    'created_at'=>$produk[0]->created_at,
-                    'updated_at'=>$produk[0]->updated_at,
-                    'deleted_at'=>$produk[0]->deleted_at,
+                    'idProduk'=>$produk->idProduk,
+                    'namaProduk'=>$produk->namaProduk,
+                    'harga'=>$produk->harga,
+                    'stok'=>$produk->stok,
+                    'jumlahMinimal'=>$produk->jumlahMinimal,
+                    'created_at'=>$produk->created_at,
+                    'updated_at'=>$produk->updated_at,
+                    'deleted_at'=>$produk->deleted_at,
                 ]
             ];
         }
@@ -195,7 +195,7 @@ class ProdukController extends Controller
 
     public function restore($id)
     {
-        $produk = Produk::where('idProduk',$id)->get();
+        $produk = Produk::find($id);
 
         if($produk==NULL){
             $status=404;
@@ -206,22 +206,22 @@ class ProdukController extends Controller
         }
         else
         {
-            $produk[0]->created_at = Carbon::now();
-            $produk[0]->updated_at = Carbon::now();
-            $produk[0]->deleted_at = NULL;
+            $produk->created_at = Carbon::now();
+            $produk->updated_at = Carbon::now();
+            $produk->deleted_at = NULL;
             $produk->save();
             $status=200;
             $response = [
                 'status' => 'Success',
                 'data' => [
-                    'idProduk'=>$produk[0]->idProduk,
-                    'namaProduk'=>$produk[0]->namaProduk,
-                    'harga'=>$produk[0]->harga,
-                    'stok'=>$produk[0]->stok,
-                    'jumlahMinimal'=>$produk[0]->jumlahMinimal,
-                    'created_at'=>$produk[0]->created_at,
-                    'updated_at'=>$produk[0]->updated_at,
-                    'deleted_at'=>$produk[0]->deleted_at,
+                    'idProduk'=>$produk->idProduk,
+                    'namaProduk'=>$produk->namaProduk,
+                    'harga'=>$produk->harga,
+                    'stok'=>$produk->stok,
+                    'jumlahMinimal'=>$produk->jumlahMinimal,
+                    'created_at'=>$produk->created_at,
+                    'updated_at'=>$produk->updated_at,
+                    'deleted_at'=>$produk->deleted_at,
                 ]
             ];
         }
@@ -230,9 +230,9 @@ class ProdukController extends Controller
 
     public function hapusPermanen($id)
     {
-        $produk = Produk::where('idProduk',$id)->get();
+        $produk = Produk::find($id);
 
-        if($produk==NULL || $produk[0]->deleted_at != NULL){
+        if($produk==NULL || $produk->deleted_at != NULL){
             $status=404;
             $response = [
                 'status' => 'Data Not Found',
@@ -246,14 +246,14 @@ class ProdukController extends Controller
             $response = [
                 'status' => 'Success',
                 'data' => [
-                    'idProduk'=>$produk[0]->idProduk,
-                    'namaProduk'=>$produk[0]->namaProduk,
-                    'harga'=>$produk[0]->harga,
-                    'stok'=>$produk[0]->stok,
-                    'jumlahMinimal'=>$produk[0]->jumlahMinimal,
-                    'created_at'=>$produk[0]->created_at,
-                    'updated_at'=>$produk[0]->updated_at,
-                    'deleted_at'=>$produk[0]->deleted_at,
+                    'idProduk'=>$produk->idProduk,
+                    'namaProduk'=>$produk->namaProduk,
+                    'harga'=>$produk->harga,
+                    'stok'=>$produk->stok,
+                    'jumlahMinimal'=>$produk->jumlahMinimal,
+                    'created_at'=>$produk->created_at,
+                    'updated_at'=>$produk->updated_at,
+                    'deleted_at'=>$produk->deleted_at,
                 ]
             ];
         }
@@ -261,9 +261,9 @@ class ProdukController extends Controller
     }
 
     public function tampilGambar($id){
-        $produk = Produk::where('idProduk',$id)->get();
+        $produk = Produk::find($id);
       
-        if($produk==null || $produk[0]->deleted_at != null){
+        if($produk==null || $produk->deleted_at != null){
             $status=404;
             $response = [
                 'status' => 'Data Not Found',
@@ -272,8 +272,8 @@ class ProdukController extends Controller
             return response()->json($response,$status); 
         }
         else{
-            return response()->make($produk[0]->gambar, 200, array(
-                'Content-Type' => (new finfo(FILEINFO_MIME))->buffer($produk[0]->gambar)));
+            return response()->make($produk->gambar, 200, array(
+                'Content-Type' => (new finfo(FILEINFO_MIME))->buffer($produk->gambar)));
         }
     }
 

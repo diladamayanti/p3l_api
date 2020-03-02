@@ -31,7 +31,7 @@ class HewanController extends Controller
 
     public function cariHewan($cari)
     {
-        $hewan = Hewan::where('id','like','%'.$cari.'%','or','namaHewan','like','%'.$cari.'%')
+        $hewan = Hewan::where('idHewan','like','%'.$cari.'%','or','namaHewan','like','%'.$cari.'%')
         ->where('deleted_at',null)->get();
 
         if(sizeof($hewan)==0)

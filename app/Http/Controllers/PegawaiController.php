@@ -35,7 +35,7 @@ class PegawaiController extends Controller
     public function cariPegawai($cari)
     {
         $pegawai = Pegawai::all('NIP','namaPegawai','alamat','tglLahir','noHp','jabatan','kataSandi','created_at','updated_at','deleted_at')
-        ->where('id','like','%'.$cari.'%','or','namaPegawai','like','%'.$cari.'%')
+        ->where('NIP','like','%'.$cari.'%','or','namaPegawai','like','%'.$cari.'%')
         ->where('deleted_at',null)->get();
 
         if(sizeof($pegawai)==0)
@@ -113,9 +113,9 @@ class PegawaiController extends Controller
         return response()->json($response,$status);
     }
 
-    public function edit(Request $request, $id)
+    public function edit(Request $request, $NIP)
     {
-        $pegawai = Pegawai::find($id);
+        $pegawai = Pegawai::find($NIP);
 
         if($pegawai==NULL){
             $status=404;
@@ -167,9 +167,9 @@ class PegawaiController extends Controller
         return response()->json($response,$status); 
     }
 
-    public function hapus($id)
+    public function hapus($NIP)
     {
-        $pegawai = Pegawai::find($id);
+        $pegawai = Pegawai::find($NIP);
 
         if($pegawai==NULL || $pegawai->deleted_at != NULL){
             $status=404;
@@ -203,9 +203,9 @@ class PegawaiController extends Controller
         return response()->json($response,$status); 
     }
 
-    public function restore($id)
+    public function restore($NIP)
     {
-        $pegawai = Pegawai::find($id);
+        $pegawai = Pegawai::find($NIP);
 
         if($pegawai==NULL){
             $status=404;
@@ -239,9 +239,9 @@ class PegawaiController extends Controller
         return response()->json($response,$status); 
     }
 
-    public function hapusPermanen($id)
+    public function hapusPermanen($NIP)
     {
-        $pegawai = Pegawai::find($id);
+        $pegawai = Pegawai::find($NIP);
 
         if($pegawai==NULL || $pegawai->deleted_at != NULL){
             $status=404;
@@ -272,8 +272,8 @@ class PegawaiController extends Controller
         return response()->json($response,$status); 
     }
 
-    public function tampilGambar($id){
-        $pegawai = Pegawai::find($id);
+    public function tampilGambar($NIP){
+        $pegawai = Pegawai::find($NIP);
 
         if($pegawai==NULL || $pegawai->deleted_at != NULL){
             $status=404;
