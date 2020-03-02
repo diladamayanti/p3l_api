@@ -23,7 +23,6 @@ class CreateTransaksiProduksTable extends Migration
             $table->integer('idKasir');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
-            $table->string('idPegawaiLog');
         });
     }
 

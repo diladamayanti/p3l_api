@@ -64,7 +64,6 @@ class TransaksiProdukController extends Controller
         $transaksiProduk->idKasir = $request['idKasir'];
         $transaksiProduk->created_at = Carbon::now();
         $transaksiProduk->updated_at = Carbon::now();
-        $transaksiProduk->idPegawaiLog = $request['idPegawaiLog'];
 
         try{
             $success = $transaksiProduk->save();
@@ -103,7 +102,6 @@ class TransaksiProdukController extends Controller
             $transaksiProduk->idCustomerService = $request['idCustomerService'];
             $transaksiProduk->idKasir = $request['idKasir'];
             $transaksiProduk->updated_at = Carbon::now();
-            $transaksiProduk->idPegawaiLog = $request['idPegawaiLog'];
             
             try{
                 $success = $transaksiProduk->save();

@@ -65,7 +65,6 @@ class TransaksiLayananController extends Controller
         $transaksiLayanan->idKasir = $request['idKasir'];
         $transaksiLayanan->created_at = Carbon::now();
         $transaksiLayanan->updated_at = Carbon::now();
-        $transaksiLayanan->idPegawaiLog = $request['idPegawaiLog'];
 
         try{
             $success = $transaksiLayanan->save();
@@ -105,7 +104,6 @@ class TransaksiLayananController extends Controller
             $transaksiLayanan->idCustomerService = $request['idCustomerService'];
             $transaksiLayanan->idKasir = $request['idKasir'];
             $transaksiLayanan->updated_at = Carbon::now();
-            $transaksiLayanan->idPegawaiLog = $request['idPegawaiLog'];
             
             try{
                 $success = $transaksiLayanan->save();
