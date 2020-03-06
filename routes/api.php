@@ -89,33 +89,24 @@ Route::delete('supplier/{id}/permanen','SupplierController@hapusPermanen');
 
 //Pengadaan
 Route::get('pengadaan','PengadaanController@index');
-Route::get('pengadaan/softDelete','PengadaanController@tampilSoftDelete');
 Route::get('pengadaan/cariPengadaan/{cari}','PengadaanController@cariPengadaan');
 Route::post('pengadaan','PengadaanController@tambah');
-Route::post('pengadaan/{id}/restore','PengadaanController@restore');
 Route::put('pengadaan/{id}','PengadaanController@edit');
 Route::delete('pengadaan/{id}','PengadaanController@hapus');
-Route::delete('pengadaan/{id}/permanen','PengadaanController@hapusPermanen');
 
 //TransaksiProduk
 Route::get('transaksiProduk','TransaksiProdukController@index');
-Route::get('transaksiProduk/softDelete','TransaksiProdukController@tampilSoftDelete');
 Route::get('transaksiProduk/cariTransaksiProduk/{cari}','TransaksiProdukController@cariTransaksiProduk');
 Route::post('transaksiProduk','TransaksiProdukController@tambah');
-Route::post('transaksiProduk/{id}/restore','TransaksiProdukController@restore');
 Route::put('transaksiProduk/{id}','TransaksiProdukController@edit');
 Route::delete('transaksiProduk/{id}','TransaksiProdukController@hapus');
-Route::delete('transaksiProduk/{id}/permanen','TransaksiProdukController@hapusPermanen');
 
 //TransaksiLayanan
 Route::get('transaksiLayanan','TransaksiLayananController@index');
-Route::get('transaksiLayanan/softDelete','TransaksiLayananController@tampilSoftDelete');
 Route::get('transaksiLayanan/cariTransaksiLayanan/{cari}','TransaksiLayananController@cariTransaksiLayanan');
 Route::post('transaksiLayanan','TransaksiLayananController@tambah');
-Route::post('transaksiLayanan/{id}/restore','TransaksiLayananController@restore');
 Route::put('transaksiLayanan/{id}','TransaksiLayananController@edit');
 Route::delete('transaksiLayanan/{id}','TransaksiLayananController@hapus');
-Route::delete('transaksiLayanan/{id}/permanen','TransaksiLayananController@hapusPermanen');
 
 //Detail Transaksi Layanan
 Route::get('dtLayanan','DTLayananController@index');

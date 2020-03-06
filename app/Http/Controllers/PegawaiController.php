@@ -23,7 +23,7 @@ class PegawaiController extends Controller
     public function tampilSoftDelete()
     {
         $pegawai = Pegawai::all('NIP','namaPegawai','alamat','tglLahir','noHp','jabatan','kataSandi','created_at','updated_at','deleted_at')
-        ->where('created_at',null);
+        ->where('deleted_at',!null);
         $response = [
             'status' => 'Success',
             'data' => $pegawai
@@ -130,7 +130,7 @@ class PegawaiController extends Controller
             $pegawai->tglLahir = $request['tglLahir'];
             $pegawai->noHp = $request['noHp'];
             $pegawai->jabatan = $request['jabatan'];
-            $pegawai->kataSandi = md5($request['kataSandi']);
+            $pegawai->kataSandi =  md5($request['kataSandi']);
             $pegawai->updated_at = Carbon::now();
             
             if($_FILES['gambar']['error'] != 4){
@@ -143,7 +143,7 @@ class PegawaiController extends Controller
                 $response = [
                     'status' => 'Success',
                     'data' => [
-                        'NIP'=>$pegawai->NIP,
+                        'NIP'=>$pegawai->getKey(),
                         'namaPegawai'=>$pegawai->namaPegawai,
                         'alamat'=>$pegawai->alamat,
                         'tglLahir'=>$pegawai->tglLahir,
@@ -180,15 +180,13 @@ class PegawaiController extends Controller
         }
         else
         {
-            $pegawai->created_at = NULL;
-            $pegawai->updated_at = NULL;
             $pegawai->deleted_at = Carbon::now();
             $pegawai->save();
             $status=200;
             $response = [
                 'status' => 'Success',
                 'data' => [
-                    'NIP'=>$pegawai->NIP,
+                    'NIP'=>$pegawai->getKey(),
                     'namaPegawai'=>$pegawai->namaPegawai,
                     'alamat'=>$pegawai->alamat,
                     'tglLahir'=>$pegawai->tglLahir,
@@ -198,7 +196,7 @@ class PegawaiController extends Controller
                     'created_at'=>$pegawai->created_at,
                     'updated_at'=>$pegawai->updated_at,
                 ]
-            ]; 
+            ];   
         }
         return response()->json($response,$status); 
     }
@@ -216,7 +214,6 @@ class PegawaiController extends Controller
         }
         else
         {
-            $pegawai->created_at = Carbon::now();
             $pegawai->updated_at = Carbon::now();
             $pegawai->deleted_at = NULL;
             $pegawai->save();
@@ -224,7 +221,7 @@ class PegawaiController extends Controller
             $response = [
                 'status' => 'Success',
                 'data' => [
-                    'NIP'=>$pegawai->NIP,
+                    'NIP'=>$pegawai->getKey(),
                     'namaPegawai'=>$pegawai->namaPegawai,
                     'alamat'=>$pegawai->alamat,
                     'tglLahir'=>$pegawai->tglLahir,
@@ -234,7 +231,7 @@ class PegawaiController extends Controller
                     'created_at'=>$pegawai->created_at,
                     'updated_at'=>$pegawai->updated_at,
                 ]
-            ]; 
+            ];  
         }
         return response()->json($response,$status); 
     }
@@ -257,7 +254,7 @@ class PegawaiController extends Controller
             $response = [
                 'status' => 'Success',
                 'data' => [
-                    'NIP'=>$pegawai->NIP,
+                    'NIP'=>$pegawai->getKey(),
                     'namaPegawai'=>$pegawai->namaPegawai,
                     'alamat'=>$pegawai->alamat,
                     'tglLahir'=>$pegawai->tglLahir,
@@ -267,12 +264,13 @@ class PegawaiController extends Controller
                     'created_at'=>$pegawai->created_at,
                     'updated_at'=>$pegawai->updated_at,
                 ]
-            ]; 
+            ];   
         }
         return response()->json($response,$status); 
     }
 
-    public function tampilGambar($NIP){
+    public function tampilGambar($NIP)
+    {
         $pegawai = Pegawai::find($NIP);
 
         if($pegawai==NULL || $pegawai->deleted_at != NULL){
@@ -379,7 +377,7 @@ class PegawaiController extends Controller
         } 
         else 
         {
-            return 'P' . date('y') . '-1';
+            return 'Owner';
         }
     }
 }

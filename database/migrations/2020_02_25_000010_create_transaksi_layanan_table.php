@@ -15,18 +15,20 @@ class CreateTransaksiLayananTable extends Migration
     {
         Schema::create('transaksiLayanan', function (Blueprint $table) {
             $table->string('noTransaksi');
-            $table->primary('noTransaksi');
+            $table->date('tglTransaksi');
             $table->double('totalBiaya');
             $table->string('statusLayanan');
             $table->string('statusPembayaran');
             $table->integer('idCustomer')->unsigned();
-            $table->foreign('idCustomer')->references('idCustomer')->on('customer');
             $table->string('idCustomerService');
-            $table->foreign('idCustomerService')->references('NIP')->on('pegawai');
             $table->string('idKasir');
-            $table->foreign('idKasir')->references('NIP')->on('pegawai');
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
+
+            $table->primary('noTransaksi');
+            $table->foreign('idCustomer')->references('idCustomer')->on('customer');
+            $table->foreign('idCustomerService')->references('NIP')->on('pegawai');
+            $table->foreign('idKasir')->references('NIP')->on('pegawai');
         });
     }
 

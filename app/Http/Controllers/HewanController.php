@@ -20,7 +20,7 @@ class HewanController extends Controller
 
     public function tampilSoftDelete()
     {
-        $hewan = Hewan::where('created_at',null);
+        $hewan = Hewan::where('deleted_at',!null);
         $response = [
             'status' => 'Success',
             'data' => $hewan
@@ -135,8 +135,6 @@ class HewanController extends Controller
         }
         else
         {
-            $hewan->created_at = NULL;
-            $hewan->updated_at = NULL;
             $hewan->deleted_at = Carbon::now();
             $hewan->save();
             $status=200;
@@ -161,7 +159,6 @@ class HewanController extends Controller
         }
         else
         {
-            $hewan->created_at = Carbon::now();
             $hewan->updated_at = Carbon::now();
             $hewan->deleted_at = NULL;
             $hewan->save();

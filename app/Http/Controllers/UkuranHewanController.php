@@ -19,7 +19,7 @@ class UkuranHewanController extends Controller
     }
 
     public function tampilSoftDelete(){
-        $ukuranHewan = UkuranHewan::where('created_at',null);
+        $ukuranHewan = UkuranHewan::where('deleted_at',!null);
         $response = [
             'status' => 'Success',
             'data' => $ukuranHewan
@@ -125,8 +125,6 @@ class UkuranHewanController extends Controller
         }
         else
         {
-            $ukuranHewan->created_at = NULL;
-            $ukuranHewan->updated_at = NULL;
             $ukuranHewan->deleted_at = Carbon::now();
             $ukuranHewan->save();
             $status=200;
@@ -151,7 +149,6 @@ class UkuranHewanController extends Controller
         }
         else
         {
-            $ukuranHewan->created_at = Carbon::now();
             $ukuranHewan->updated_at = Carbon::now();
             $ukuranHewan->deleted_at = NULL;
             $ukuranHewan->save();

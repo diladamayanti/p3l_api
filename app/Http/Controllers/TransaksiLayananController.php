@@ -18,17 +18,6 @@ class TransaksiLayananController extends Controller
         return response()->json($response,200);
     }
 
-    public function tampilSoftDelete()
-    {
-        $transaksiLayanan = TransaksiLayanan::where('created_at',null);
-        $response = [
-            'status' => 'Success',
-            'data' => $transaksiLayanan
-        ];
-
-        return response()->json($response,200);
-    }
-
     public function cariTransaksiLayanan($noTransaksi)
     {
         $transaksiLayanan = TransaksiLayanan::where('noTransaksi','like','%'.$noTransaksi.'%')
@@ -57,6 +46,7 @@ class TransaksiLayananController extends Controller
     {
         $transaksiLayanan = new TransaksiLayanan;
         $transaksiLayanan->noTransaksi = $this->generateNoTransaksi();
+        $transaksiLayanan->tglTransaksi = Carbon::now();
         $transaksiLayanan->totalBiaya = $request['totalBiaya'];
         $transaksiLayanan->statusLayanan = $request['statusLayanan'];
         $transaksiLayanan->statusPembayaran = $request['statusPembayaran'];
@@ -127,58 +117,6 @@ class TransaksiLayananController extends Controller
     }
 
     public function hapus($id)
-    {
-        $transaksiLayanan = TransaksiLayanan::find($id);
-
-        if($transaksiLayanan==NULL || $transaksiLayanan->deleted_at != NULL){
-            $status=404;
-            $response = [
-                'status' => 'Data Not Found',
-                'data' => []
-            ];
-        }
-        else
-        {
-            $transaksiLayanan->created_at = NULL;
-            $transaksiLayanan->updated_at = NULL;
-            $transaksiLayanan->deleted_at = Carbon::now();
-            $transaksiLayanan->save();
-            $status=200;
-            $response = [
-                'status' => 'Success',
-                'data' => $transaksiLayanan
-            ];
-        }
-        return response()->json($response,$status); 
-    }
-
-    public function restore($id)
-    {
-        $transaksiLayanan = TransaksiLayanan::find($id);
-
-        if($transaksiLayanan==NULL){
-            $status=404;
-            $response = [
-                'status' => 'Data Not Found',
-                'data' => []
-            ];
-        }
-        else
-        {
-            $transaksiLayanan->created_at = Carbon::now();
-            $transaksiLayanan->updated_at = Carbon::now();
-            $transaksiLayanan->deleted_at = NULL;
-            $transaksiLayanan->save();
-            $status=200;
-            $response = [
-                'status' => 'Success',
-                'data' => $transaksiLayanan
-            ];
-        }
-        return response()->json($response,$status); 
-    }
-
-    public function hapusPermanen($id)
     {
         $transaksiLayanan = TransaksiLayanan::find($id);
 

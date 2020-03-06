@@ -21,7 +21,8 @@ class ProdukController extends Controller
 
     public function tampilSoftDelete()
     {
-        $produk = Produk::all('idProduk','namaProduk','harga','stok','jumlahMinimal','created_at','updated_at','deleted_at')->where('created_at',null);
+        $produk = Produk::all('idProduk','namaProduk','harga','stok','jumlahMinimal','created_at','updated_at','deleted_at')
+        ->where('deleted_at',!null);
         $response = [
             'status' => 'Success',
             'data' => $produk
@@ -66,7 +67,6 @@ class ProdukController extends Controller
         $produk->gambar = $this->upload();
         $produk->created_at = Carbon::now();
         $produk->updated_at = Carbon::now();
-
         
         if($produk->gambar == 1)
         {
@@ -86,7 +86,7 @@ class ProdukController extends Controller
                 $response = [
                     'status' => 'Success',
                     'data' => [
-                        'idProduk'=>$produk->idProduk,
+                        'idProduk'=>$produk->getKey(),
                         'namaProduk'=>$produk->namaProduk,
                         'harga'=>$produk->harga,
                         'stok'=>$produk->stok,
@@ -108,7 +108,7 @@ class ProdukController extends Controller
         return response()->json($response,$status);
     }
 
-    public function edit(Request $request, $idProduk)
+    public function edit(Request $request, $id)
     {
         $produk = Produk::find($id);
 
@@ -127,7 +127,7 @@ class ProdukController extends Controller
             $produk->updated_at = Carbon::now();
 
             if($_FILES['gambar']['error'] != 4){
-                $produk[0]->gambar= $this->upload();
+                $produk->gambar= $this->upload();
             }
             
             try{
@@ -136,15 +136,16 @@ class ProdukController extends Controller
                 $response = [
                     'status' => 'Success',
                     'data' => [
-                        'idProduk'=>$produk->idProduk,
+                        'idProduk'=>$produk->getKey(),
                         'namaProduk'=>$produk->namaProduk,
                         'harga'=>$produk->harga,
                         'stok'=>$produk->stok,
                         'jumlahMinimal'=>$produk->jumlahMinimal,
                         'created_at'=>$produk->created_at,
                         'updated_at'=>$produk->updated_at,
+                        'deleted_at'=>$produk->deleted_at,
                     ]
-                ];  
+                ];   
             }
             catch(\Illuminate\Database\QueryException $e){
                 $status = 500;
@@ -171,15 +172,13 @@ class ProdukController extends Controller
         }
         else
         {
-            $produk->created_at = NULL;
-            $produk->updated_at = NULL;
             $produk->deleted_at = Carbon::now();
             $produk->save();
             $status=200;
             $response = [
                 'status' => 'Success',
                 'data' => [
-                    'idProduk'=>$produk->idProduk,
+                    'idProduk'=>$produk->getKey(),
                     'namaProduk'=>$produk->namaProduk,
                     'harga'=>$produk->harga,
                     'stok'=>$produk->stok,
@@ -188,7 +187,7 @@ class ProdukController extends Controller
                     'updated_at'=>$produk->updated_at,
                     'deleted_at'=>$produk->deleted_at,
                 ]
-            ];
+            ]; 
         }
         return response()->json($response,$status); 
     }
@@ -206,7 +205,6 @@ class ProdukController extends Controller
         }
         else
         {
-            $produk->created_at = Carbon::now();
             $produk->updated_at = Carbon::now();
             $produk->deleted_at = NULL;
             $produk->save();
@@ -214,7 +212,7 @@ class ProdukController extends Controller
             $response = [
                 'status' => 'Success',
                 'data' => [
-                    'idProduk'=>$produk->idProduk,
+                    'idProduk'=>$produk->getKey(),
                     'namaProduk'=>$produk->namaProduk,
                     'harga'=>$produk->harga,
                     'stok'=>$produk->stok,
@@ -223,7 +221,7 @@ class ProdukController extends Controller
                     'updated_at'=>$produk->updated_at,
                     'deleted_at'=>$produk->deleted_at,
                 ]
-            ];
+            ];  
         }
         return response()->json($response,$status); 
     }
@@ -246,7 +244,7 @@ class ProdukController extends Controller
             $response = [
                 'status' => 'Success',
                 'data' => [
-                    'idProduk'=>$produk->idProduk,
+                    'idProduk'=>$produk->getKey(),
                     'namaProduk'=>$produk->namaProduk,
                     'harga'=>$produk->harga,
                     'stok'=>$produk->stok,
@@ -255,12 +253,13 @@ class ProdukController extends Controller
                     'updated_at'=>$produk->updated_at,
                     'deleted_at'=>$produk->deleted_at,
                 ]
-            ];
+            ]; 
         }
         return response()->json($response,$status); 
     }
 
-    public function tampilGambar($id){
+    public function tampilGambar($id)
+    {
         $produk = Produk::find($id);
       
         if($produk==null || $produk->deleted_at != null){

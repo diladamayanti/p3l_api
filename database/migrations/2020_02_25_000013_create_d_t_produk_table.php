@@ -14,13 +14,14 @@ class CreateDTProdukTable extends Migration
     public function up()
     {
         Schema::create('dtproduk', function (Blueprint $table) {
-            $table->increments('id');
             $table->string('noTransaksi');
-            $table->foreign('noTransaksi')->references('noTransaksi')->on('transaksiProduk');
             $table->string('idProduk');
-            $table->foreign('idProduk')->references('idProduk')->on('produk');
             $table->integer('jumlah');
             $table->double('subTotal');
+
+            $table->primary('noTransaksi','idProduk');
+            $table->foreign('noTransaksi')->references('noTransaksi')->on('transaksiProduk');
+            $table->foreign('idProduk')->references('idProduk')->on('produk');
         });
     }
 

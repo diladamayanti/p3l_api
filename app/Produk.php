@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Produk extends Model
 {
     protected $table = 'produk';
-    protected $primaryKey = 'idProduk';
+    protected $primaryKey = 'idProduk'; 
+    public $incrementing = false;
 }

@@ -19,7 +19,7 @@ class CustomerController extends Controller
     }
 
     public function tampilSoftDelete(){
-        $customer = Customer::where('created_at',null);
+        $customer = Customer::where('deleted_at',!null);
         $response = [
             'status' => 'Success',
             'data' => $customer
@@ -133,8 +133,6 @@ class CustomerController extends Controller
         }
         else
         {
-            $customer->created_at = NULL;
-            $customer->updated_at = NULL;
             $customer->deleted_at = Carbon::now();
             $customer->save();
             $status=200;
@@ -159,7 +157,6 @@ class CustomerController extends Controller
         }
         else
         {
-            $customer->created_at = Carbon::now();
             $customer->updated_at = Carbon::now();
             $customer->deleted_at = NULL;
             $customer->save();

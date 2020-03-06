@@ -15,13 +15,15 @@ class CreatePengadaanTable extends Migration
     {
         Schema::create('pengadaan', function (Blueprint $table) {
             $table->string('noPO');
-            $table->primary('noPO');
+            $table->date('tglPengadaan');
             $table->integer('idSupplier')->unsigned();
-            $table->foreign('idSupplier')->references('idSupplier')->on('supplier');
             $table->string('status');
             $table->double('totalHarga');
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
+
+            $table->primary('noPO');
+            $table->foreign('idSupplier')->references('idSupplier')->on('supplier');
         });
     }
 

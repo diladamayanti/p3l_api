@@ -14,13 +14,14 @@ class CreateDTLayananTable extends Migration
     public function up()
     {
         Schema::create('DTlayanan', function (Blueprint $table) {
-            $table->increments('id');
             $table->string('noTransaksi');
-            $table->foreign('noTransaksi')->references('noTransaksi')->on('transaksiLayanan');
             $table->string('idLayanan');
-            $table->foreign('idLayanan')->references('idLayanan')->on('layanan');
             $table->integer('jumlah');
             $table->double('subTotal');
+
+            $table->primary('noTransaksi','idLayanan');
+            $table->foreign('idLayanan')->references('idLayanan')->on('layanan');
+            $table->foreign('noTransaksi')->references('noTransaksi')->on('transaksiLayanan');
         });
     }
 

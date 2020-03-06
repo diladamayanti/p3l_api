@@ -15,16 +15,17 @@ class CreateLayananTable extends Migration
     {
         Schema::create('layanan', function (Blueprint $table) {
             $table->string('idLayanan');
-            $table->primary('idLayanan');
             $table->string('namaLayanan');
             $table->double('harga');
             $table->integer('idJenis')->unsigned();
-            $table->foreign('idJenis')->references('idJenis')->on('jenisHewan');
             $table->integer('idUkuran')->unsigned();
-            $table->foreign('idUkuran')->references('idUkuran')->on('ukuranHewan');
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
             $table->dateTime('deleted_at')->nullable();
+
+            $table->primary('idLayanan');
+            $table->foreign('idJenis')->references('idJenis')->on('jenisHewan');
+            $table->foreign('idUkuran')->references('idUkuran')->on('ukuranHewan');
         });
     }
 

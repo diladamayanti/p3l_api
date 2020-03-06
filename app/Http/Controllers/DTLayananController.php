@@ -108,7 +108,7 @@ class DTLayananController extends Controller
     public function hapus($id)
     {
         $dt_Layanan = DTLayanan::find($id);
-
+        
         if($dt_Layanan==NULL){
             $status=404;
             $response = [

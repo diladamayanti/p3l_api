@@ -19,7 +19,7 @@ class JenisHewanController extends Controller
     }
 
     public function tampilSoftDelete(){
-        $jenisHewan = JenisHewan::where('created_at',null);
+        $jenisHewan = JenisHewan::where('deleted_at',!null);
         $response = [
             'status' => 'Success',
             'data' => $jenisHewan
@@ -80,7 +80,6 @@ class JenisHewanController extends Controller
     public function edit(Request $request, $id)
     {
         $jenisHewan = JenisHewan::find($id);
-
         if($jenisHewan==NULL){
             $status=404;
             $response = [
@@ -126,8 +125,6 @@ class JenisHewanController extends Controller
         }
         else
         {
-            $jenisHewan->created_at = NULL;
-            $jenisHewan->updated_at = NULL;
             $jenisHewan->deleted_at = Carbon::now();
             $jenisHewan->save();
             $status=200;
@@ -152,7 +149,6 @@ class JenisHewanController extends Controller
         }
         else
         {
-            $jenisHewan->created_at = Carbon::now();
             $jenisHewan->updated_at = Carbon::now();
             $jenisHewan->deleted_at = NULL;
             $jenisHewan->save();

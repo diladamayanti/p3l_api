@@ -18,17 +18,6 @@ class TransaksiProdukController extends Controller
         return response()->json($response,200);
     }
 
-    public function tampilSoftDelete()
-    {
-        $transaksiProduk = TransaksiProduk::where('created_at',null);
-        $response = [
-            'status' => 'Success',
-            'data' => $transaksiProduk
-        ];
-
-        return response()->json($response,200);
-    }
-
     public function cariTransaksiProduk($noTransaksi)
     {
         $transaksiProduk = TransaksiProduk::where('noTransaksi','like','%'.$noTransaksi.'%')
@@ -57,6 +46,7 @@ class TransaksiProdukController extends Controller
     {
         $transaksiProduk = new TransaksiProduk;
         $transaksiProduk->noTransaksi = $this->generateNoTransaksi();
+        $transaksiProduk->tglTransaksi = Carbon::now();
         $transaksiProduk->totalBiaya = $request['totalBiaya'];
         $transaksiProduk->statusPembayaran = $request['statusPembayaran'];
         $transaksiProduk->idCustomer = $request['idCustomer'];
@@ -125,58 +115,6 @@ class TransaksiProdukController extends Controller
     }
 
     public function hapus($id)
-    {
-        $transaksiProduk = TransaksiProduk::find($id);
-
-        if($transaksiProduk==NULL || $transaksiProduk->deleted_at != NULL){
-            $status=404;
-            $response = [
-                'status' => 'Data Not Found',
-                'data' => []
-            ];
-        }
-        else
-        {
-            $transaksiProduk->created_at = NULL;
-            $transaksiProduk->updated_at = NULL;
-            $transaksiProduk->deleted_at = Carbon::now();
-            $transaksiProduk->save();
-            $status=200;
-            $response = [
-                'status' => 'Success',
-                'data' => $transaksiProduk
-            ];
-        }
-        return response()->json($response,$status); 
-    }
-
-    public function restore($id)
-    {
-        $transaksiProduk = TransaksiProduk::find($id);
-
-        if($transaksiProduk==NULL){
-            $status=404;
-            $response = [
-                'status' => 'Data Not Found',
-                'data' => []
-            ];
-        }
-        else
-        {
-            $transaksiProduk->created_at = Carbon::now();
-            $transaksiProduk->updated_at = Carbon::now();
-            $transaksiProduk->deleted_at = NULL;
-            $transaksiProduk->save();
-            $status=200;
-            $response = [
-                'status' => 'Success',
-                'data' => $transaksiProduk
-            ];
-        }
-        return response()->json($response,$status); 
-    }
-
-    public function hapusPermanen($id)
     {
         $transaksiProduk = TransaksiProduk::find($id);
 

@@ -110,7 +110,7 @@ class DTPengadaanController extends Controller
     public function hapus($id)
     {
         $dt_Pengadaan = DTPengadaan::find($id);
-
+        
         if($dt_Pengadaan==NULL){
             $status=404;
             $response = [

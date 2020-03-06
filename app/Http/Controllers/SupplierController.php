@@ -19,7 +19,7 @@ class SupplierController extends Controller
     }
 
     public function tampilSoftDelete(){
-        $supplier = Supplier::where('created_at',null);
+        $supplier = Supplier::where('deleted_at',!null);
         $response = [
             'status' => 'Success',
             'data' => $supplier
@@ -129,8 +129,6 @@ class SupplierController extends Controller
         }
         else
         {
-            $supplier->created_at = NULL;
-            $supplier->updated_at = NULL;
             $supplier->deleted_at = Carbon::now();
             $supplier->save();
             $status=200;
@@ -155,7 +153,6 @@ class SupplierController extends Controller
         }
         else
         {
-            $supplier->created_at = Carbon::now();
             $supplier->updated_at = Carbon::now();
             $supplier->deleted_at = NULL;
             $supplier->save();

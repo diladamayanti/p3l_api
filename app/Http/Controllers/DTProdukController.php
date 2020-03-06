@@ -108,7 +108,7 @@ class DTProdukController extends Controller
     public function hapus($id)
     {
         $dt_Produk = DTProduk::find($id);
-
+        
         if($dt_Produk==NULL){
             $status=404;
             $response = [

@@ -20,7 +20,7 @@ class LayananController extends Controller
 
     public function tampilSoftDelete()
     {
-        $layanan = Layanan::where('created_at',null);
+        $layanan = Layanan::where('deleted_at',!null);
         $response = [
             'status' => 'Success',
             'data' => $layanan
@@ -135,8 +135,6 @@ class LayananController extends Controller
         }
         else
         {
-            $layanan->created_at = NULL;
-            $layanan->updated_at = NULL;
             $layanan->deleted_at = Carbon::now();
             $layanan->save();
             $status=200;
@@ -161,7 +159,6 @@ class LayananController extends Controller
         }
         else
         {
-            $layanan->created_at = Carbon::now();
             $layanan->updated_at = Carbon::now();
             $layanan->deleted_at = NULL;
             $layanan->save();

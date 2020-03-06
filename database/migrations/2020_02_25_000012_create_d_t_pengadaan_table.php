@@ -14,14 +14,15 @@ class CreateDTPengadaanTable extends Migration
     public function up()
     {
         Schema::create('dtpengadaan', function (Blueprint $table) {
-            $table->increments('id');
             $table->string('noPO');
-            $table->foreign('noPO')->references('noPO')->on('pengadaan');
             $table->string('idProduk');
-            $table->foreign('idProduk')->references('idProduk')->on('produk');
             $table->integer('jumlah');
             $table->string('satuan');
             $table->double('subTotal');
+        
+            $table->primary('noPO','idProduk');
+            $table->foreign('noPO')->references('noPO')->on('pengadaan');
+            $table->foreign('idProduk')->references('idProduk')->on('produk');
         });
     }
 

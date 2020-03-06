@@ -15,7 +15,6 @@ class CreateProdukTable extends Migration
     {
         Schema::create('produk', function (Blueprint $table) {
             $table->string('idProduk');
-            $table->primary('idProduk');
             $table->string('namaProduk');
             $table->double('harga');
             $table->integer('stok');
@@ -24,6 +23,8 @@ class CreateProdukTable extends Migration
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
             $table->dateTime('deleted_at')->nullable();
+
+            $table->primary('idProduk');
         });
     }
 

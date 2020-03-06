@@ -18,17 +18,6 @@ class PengadaanController extends Controller
         return response()->json($response,200);
     }
 
-    public function tampilSoftDelete()
-    {
-        $pengadaan = Pengadaan::where('created_at',null);
-        $response = [
-            'status' => 'Success',
-            'data' => $pengadaan
-        ];
-
-        return response()->json($response,200);
-    }
-
     public function cariPengadaan($noPO)
     {
         $pengadaan = Pengadaan::where('noPO','like','%'.$noPO.'%')
@@ -57,6 +46,7 @@ class PengadaanController extends Controller
     {
         $pengadaan = new Pengadaan;
         $pengadaan->noPO = $this->generateNoPO();
+        $pengadaan->tglPengadaan = Carbon::now();
         $pengadaan->totalHarga = $request['totalHarga'];
         $pengadaan->idSupplier = $request['idSupplier'];
         $pengadaan->status = $request['status'];
@@ -121,58 +111,6 @@ class PengadaanController extends Controller
     }
 
     public function hapus($id)
-    {
-        $pengadaan = Pengadaan::find($id);
-
-        if($pengadaan==NULL || $pengadaan->deleted_at != NULL){
-            $status=404;
-            $response = [
-                'status' => 'Data Not Found',
-                'data' => []
-            ];
-        }
-        else
-        {
-            $pengadaan->created_at = NULL;
-            $pengadaan->updated_at = NULL;
-            $pengadaan->deleted_at = Carbon::now();
-            $pengadaan->save();
-            $status=200;
-            $response = [
-                'status' => 'Success',
-                'data' => $pengadaan
-            ];
-        }
-        return response()->json($response,$status); 
-    }
-
-    public function restore($id)
-    {
-        $pengadaan = Pengadaan::find($id);
-
-        if($pengadaan==NULL){
-            $status=404;
-            $response = [
-                'status' => 'Data Not Found',
-                'data' => []
-            ];
-        }
-        else
-        {
-            $pengadaan->created_at = Carbon::now();
-            $pengadaan->updated_at = Carbon::now();
-            $pengadaan->deleted_at = NULL;
-            $pengadaan->save();
-            $status=200;
-            $response = [
-                'status' => 'Success',
-                'data' => $pengadaan
-            ];
-        }
-        return response()->json($response,$status); 
-    }
-
-    public function hapusPermanen($id)
     {
         $pengadaan = Pengadaan::find($id);
 

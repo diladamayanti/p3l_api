@@ -15,7 +15,6 @@ class CreatePegawaiTable extends Migration
     {
         Schema::create('pegawai', function (Blueprint $table) {
             $table->string('NIP');
-            $table->primary('NIP');
             $table->string('namaPegawai');
             $table->string('alamat');
             $table->date('tglLahir');
@@ -26,6 +25,8 @@ class CreatePegawaiTable extends Migration
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
             $table->dateTime('deleted_at')->nullable();
+
+            $table->primary('NIP');
         });
     }
 
