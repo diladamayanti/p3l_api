@@ -57,6 +57,7 @@ class JenisHewanController extends Controller
         $jenisHewan->namaJenis = $request['namaJenis'];
         $jenisHewan->created_at = Carbon::now();
         $jenisHewan->updated_at = Carbon::now();
+        $jenisHewan->idPegawaiLog = $request['idPegawaiLog'];
 
         try{
             $success = $jenisHewan->save();
@@ -90,6 +91,7 @@ class JenisHewanController extends Controller
         else{
             $jenisHewan->namaJenis = $request['namaJenis'];
             $jenisHewan->updated_at = Carbon::now();
+            $jenisHewan->idPegawaiLog = $request['idPegawaiLog'];
             
             try{
                 $success = $jenisHewan->save();
@@ -151,6 +153,8 @@ class JenisHewanController extends Controller
         {
             $jenisHewan->updated_at = Carbon::now();
             $jenisHewan->deleted_at = NULL;
+            $jenisHewan->idPegawaiLog = $request['idPegawaiLog'];
+
             $jenisHewan->save();
             $status=200;
             $response = [

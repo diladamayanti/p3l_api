@@ -159,6 +159,8 @@ class CustomerController extends Controller
         {
             $customer->updated_at = Carbon::now();
             $customer->deleted_at = NULL;
+            $customer->idPegawaiLog = $request['idPegawaiLog'];
+
             $customer->save();
             $status=200;
             $response = [

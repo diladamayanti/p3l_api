@@ -63,6 +63,7 @@ class LayananController extends Controller
         $layanan->idUkuran = $request['idUkuran'];
         $layanan->created_at = Carbon::now();
         $layanan->updated_at = Carbon::now();
+        $layanan->idPegawaiLog = $request['idPegawaiLog'];
 
         try{
             $success = $layanan->save();
@@ -100,6 +101,7 @@ class LayananController extends Controller
             $layanan->idJenis = $request['idJenis'];
             $layanan->idUkuran = $request['idUkuran'];
             $layanan->updated_at = Carbon::now();
+            $layanan->idPegawaiLog = $request['idPegawaiLog'];
             
             try{
                 $success = $layanan->save();
@@ -161,6 +163,8 @@ class LayananController extends Controller
         {
             $layanan->updated_at = Carbon::now();
             $layanan->deleted_at = NULL;
+            $layanan->idPegawaiLog = $request['idPegawaiLog'];
+
             $layanan->save();
             $status=200;
             $response = [

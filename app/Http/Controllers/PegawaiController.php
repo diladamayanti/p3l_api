@@ -216,6 +216,8 @@ class PegawaiController extends Controller
         {
             $pegawai->updated_at = Carbon::now();
             $pegawai->deleted_at = NULL;
+            $pegawai->idPegawaiLog = $request['idPegawaiLog'];
+
             $pegawai->save();
             $status=200;
             $response = [

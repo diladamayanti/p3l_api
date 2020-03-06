@@ -125,6 +125,7 @@ class ProdukController extends Controller
             $produk->stok = $request['stok'];
             $produk->jumlahMinimal = $request['jumlahMinimal'];
             $produk->updated_at = Carbon::now();
+            $produk->idPegawaiLog = $request['idPegawaiLog'];
 
             if($_FILES['gambar']['error'] != 4){
                 $produk->gambar= $this->upload();
@@ -173,6 +174,8 @@ class ProdukController extends Controller
         else
         {
             $produk->deleted_at = Carbon::now();
+            $produk->idPegawaiLog = $request['idPegawaiLog'];
+
             $produk->save();
             $status=200;
             $response = [
@@ -207,6 +210,8 @@ class ProdukController extends Controller
         {
             $produk->updated_at = Carbon::now();
             $produk->deleted_at = NULL;
+            $produk->idPegawaiLog = $request['idPegawaiLog'];
+
             $produk->save();
             $status=200;
             $response = [

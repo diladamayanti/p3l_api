@@ -161,6 +161,8 @@ class HewanController extends Controller
         {
             $hewan->updated_at = Carbon::now();
             $hewan->deleted_at = NULL;
+            $hewan->idPegawaiLog = $request['idPegawaiLog'];
+
             $hewan->save();
             $status=200;
             $response = [

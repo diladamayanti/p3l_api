@@ -59,6 +59,7 @@ class SupplierController extends Controller
         $supplier->noHp = $request['noHp'];
         $supplier->created_at = Carbon::now();
         $supplier->updated_at = Carbon::now();
+        $supplier->idPegawaiLog = $request['idPegawaiLog'];
 
         try{
             $success = $supplier->save();
@@ -95,6 +96,7 @@ class SupplierController extends Controller
             $supplier->alamat = $request['alamat'];
             $supplier->noHp = $request['noHp'];
             $supplier->updated_at = Carbon::now();
+            $supplier->idPegawaiLog = $request['idPegawaiLog'];
             
             try{
                 $success = $supplier->save();
@@ -155,6 +157,8 @@ class SupplierController extends Controller
         {
             $supplier->updated_at = Carbon::now();
             $supplier->deleted_at = NULL;
+            $supplier->idPegawaiLog = $request['idPegawaiLog'];
+
             $supplier->save();
             $status=200;
             $response = [

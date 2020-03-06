@@ -57,6 +57,7 @@ class UkuranHewanController extends Controller
         $ukuranHewan->namaUkuran = $request['namaUkuran'];
         $ukuranHewan->created_at = Carbon::now();
         $ukuranHewan->updated_at = Carbon::now();
+        $ukuranHewan->idPegawaiLog = $request['idPegawaiLog'];
 
         try{
             $success = $ukuranHewan->save();
@@ -91,6 +92,7 @@ class UkuranHewanController extends Controller
         else{
             $ukuranHewan->namaUkuran = $request['namaUkuran'];
             $ukuranHewan->updated_at = Carbon::now();
+            $ukuranHewan->idPegawaiLog = $request['idPegawaiLog'];
             
             try{
                 $success = $ukuranHewan->save();
@@ -151,6 +153,8 @@ class UkuranHewanController extends Controller
         {
             $ukuranHewan->updated_at = Carbon::now();
             $ukuranHewan->deleted_at = NULL;
+            $ukuranHewan->idPegawaiLog = $request['idPegawaiLog'];
+
             $ukuranHewan->save();
             $status=200;
             $response = [
