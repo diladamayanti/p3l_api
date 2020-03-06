@@ -19,13 +19,15 @@ class CreateLayananTable extends Migration
             $table->double('harga');
             $table->integer('idJenis')->unsigned();
             $table->integer('idUkuran')->unsigned();
-            $table->dateTime('created_at')->nullable();
-            $table->dateTime('updated_at')->nullable();
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
             $table->dateTime('deleted_at')->nullable();
-
+            $table->string('idPegawaiLog');
+            
             $table->primary('idLayanan');
             $table->foreign('idJenis')->references('idJenis')->on('jenisHewan');
             $table->foreign('idUkuran')->references('idUkuran')->on('ukuranHewan');
+            $table->foreign('idPegawaiLog')->references('NIP')->on('pegawai');
         });
     }
 

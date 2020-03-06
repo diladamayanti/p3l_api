@@ -16,9 +16,12 @@ class CreateJenisHewanTable extends Migration
         Schema::create('jenisHewan', function (Blueprint $table) {
             $table->increments('idJenis');
             $table->string('namaJenis');
-            $table->dateTime('created_at')->nullable();
-            $table->dateTime('updated_at')->nullable();
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
             $table->dateTime('deleted_at')->nullable();
+            $table->string('idPegawaiLog');
+            
+            $table->foreign('idPegawaiLog')->references('NIP')->on('pegawai');
         });
     }
 

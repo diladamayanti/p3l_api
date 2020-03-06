@@ -16,9 +16,12 @@ class CreateUkuranHewanTable extends Migration
         Schema::create('ukuranHewan', function (Blueprint $table) {
             $table->increments('idUkuran');
             $table->string('namaUkuran');
-            $table->dateTime('created_at')->nullable();
-            $table->dateTime('updated_at')->nullable();
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
             $table->dateTime('deleted_at')->nullable();
+            $table->string('idPegawaiLog');
+            
+            $table->foreign('idPegawaiLog')->references('NIP')->on('pegawai');
         });
     }
 

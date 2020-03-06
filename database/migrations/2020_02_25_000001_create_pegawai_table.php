@@ -22,11 +22,13 @@ class CreatePegawaiTable extends Migration
             $table->string('jabatan');
             $table->string('kataSandi');
             $table->binary('gambar');
-            $table->dateTime('created_at')->nullable();
-            $table->dateTime('updated_at')->nullable();
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
             $table->dateTime('deleted_at')->nullable();
-
+            $table->string('idPegawaiLog');
+            
             $table->primary('NIP');
+            $table->foreign('idPegawaiLog')->references('NIP')->on('pegawai');
         });
     }
 

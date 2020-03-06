@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Pengadaan;
+use App\TransaksiPengadaan;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-class PengadaanController extends Controller
+class TransaksiPengadaanController extends Controller
 {
     public function index()
     {
-        $pengadaan = Pengadaan::where('deleted_at',null);
+        $transaksiPengadaan = TransaksiPengadaan::where('deleted_at',null);
         $response = [
             'status' => 'Success',
-            'data' => $pengadaan
+            'data' => $transaksiPengadaan
         ];
         return response()->json($response,200);
     }
 
     public function cariPengadaan($noPO)
     {
-        $pengadaan = Pengadaan::where('noPO','like','%'.$noPO.'%')
+        $transaksiPengadaan = TransaksiPengadaan::where('noPO','like','%'.$noPO.'%')
         ->where('deleted_at',null)->get();
 
-        if(sizeof($pengadaan)==0)
+        if(sizeof($transaksiPengadaan)==0)
         {
             $status=404;
             $response = [
@@ -36,7 +36,7 @@ class PengadaanController extends Controller
             $status=200;
             $response = [
                 'status' => 'Success',
-                'data' => $pengadaan
+                'data' => $transaksiPengadaan
             ];
         }
         return response()->json($response,$status); 
@@ -44,17 +44,17 @@ class PengadaanController extends Controller
 
     public function tambah(Request $request)
     {
-        $pengadaan = new Pengadaan;
-        $pengadaan->noPO = $this->generateNoPO();
-        $pengadaan->tglPengadaan = Carbon::now();
-        $pengadaan->totalHarga = $request['totalHarga'];
-        $pengadaan->idSupplier = $request['idSupplier'];
-        $pengadaan->status = $request['status'];
-        $pengadaan->created_at = Carbon::now();
-        $pengadaan->updated_at = Carbon::now();
+        $transaksiPengadaan = new TransaksiPengadaan;
+        $transaksiPengadaan->noPO = $this->generateNoPO();
+        $transaksiPengadaan->tglPengadaan = Carbon::now();
+        $transaksiPengadaan->totalHarga = $request['totalHarga'];
+        $transaksiPengadaan->idSupplier = $request['idSupplier'];
+        $transaksiPengadaan->status = $request['status'];
+        $transaksiPengadaan->created_at = Carbon::now();
+        $transaksiPengadaan->updated_at = Carbon::now();
 
         try{
-            $success = $pengadaan->save();
+            $success = $transaksiPengadaan->save();
             $status = 200;
             $response = [
                 'status' => 'Success',
@@ -74,9 +74,9 @@ class PengadaanController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $pengadaan = Pengadaan::find($id);
+        $transaksiPengadaan = TransaksiPengadaan::find($id);
 
-        if($pengadaan==NULL){
+        if($transaksiPengadaan==NULL){
             $status=404;
             $response = [
                 'status' => 'Data Not Found',
@@ -84,17 +84,17 @@ class PengadaanController extends Controller
             ];
         }
         else{
-            $pengadaan->totalHarga = $request['totalHarga'];
-            $pengadaan->idSupplier = $request['idSupplier'];
-            $pengadaan->status = $request['status'];
-            $pengadaan->updated_at = Carbon::now();
+            $transaksiPengadaan->totalHarga = $request['totalHarga'];
+            $transaksiPengadaan->idSupplier = $request['idSupplier'];
+            $transaksiPengadaan->status = $request['status'];
+            $transaksiPengadaan->updated_at = Carbon::now();
             
             try{
-                $success = $pengadaan->save();
+                $success = $transaksiPengadaan->save();
                 $status = 200;
                 $response = [
                     'status' => 'Success',
-                    'data' => $pengadaan
+                    'data' => $transaksiPengadaan
                 ];  
             }
             catch(\Illuminate\Database\QueryException $e){
@@ -112,9 +112,9 @@ class PengadaanController extends Controller
 
     public function hapus($id)
     {
-        $pengadaan = Pengadaan::find($id);
+        $transaksiPengadaan = TransaksiPengadaan::find($id);
 
-        if($pengadaan==NULL || $pengadaan->deleted_at != NULL){
+        if($transaksiPengadaan==NULL || $transaksiPengadaan->deleted_at != NULL){
             $status=404;
             $response = [
                 'status' => 'Data Not Found',
@@ -123,11 +123,11 @@ class PengadaanController extends Controller
         }
         else
         {
-            $layanan->delete();
+            $transaksiPengadaan->delete();
             $status=200;
             $response = [
                 'status' => 'Success',
-                'data' => $pengadaan
+                'data' => $transaksiPengadaan
             ];
         }
         return response()->json($response,$status); 
@@ -135,12 +135,12 @@ class PengadaanController extends Controller
 
     public function generateNoPO()
     {
-        $pengadaan = Pengadaan::whereDate('created_at', date('Y-m-d'))
+        $transaksiPengadaan = TransaksiPengadaan::whereDate('created_at', date('Y-m-d'))
         ->orderBy('created_at', 'desc')->first();
 
-        if (isset($pengadaan)) 
+        if (isset($transaksiPengadaan)) 
         {
-            $noTerakhir=substr($pengadaan->noPO,14);
+            $noTerakhir=substr($transaksiPengadaan->noPO,14);
             if($noTerakhir<9)
                 return 'PO-' . date('Y-m-d') . '-0' . ($noTerakhir + 1);
             else    

@@ -18,9 +18,12 @@ class CreateSupplierTable extends Migration
             $table->string('namaSupplier');
             $table->string('alamat');
             $table->string('noHp');
-            $table->dateTime('created_at')->nullable();
-            $table->dateTime('updated_at')->nullable();
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
             $table->dateTime('deleted_at')->nullable();
+            $table->string('idPegawaiLog');
+            
+            $table->foreign('idPegawaiLog')->references('NIP')->on('pegawai');
         });
     }
 

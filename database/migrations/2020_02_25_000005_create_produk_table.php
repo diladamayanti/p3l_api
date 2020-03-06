@@ -20,11 +20,13 @@ class CreateProdukTable extends Migration
             $table->integer('stok');
             $table->integer('jumlahMinimal');
             $table->binary('gambar');
-            $table->dateTime('created_at')->nullable();
-            $table->dateTime('updated_at')->nullable();
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
             $table->dateTime('deleted_at')->nullable();
+            $table->string('idPegawaiLog');
 
             $table->primary('idProduk');
+            $table->foreign('idPegawaiLog')->references('NIP')->on('pegawai');
         });
     }
 

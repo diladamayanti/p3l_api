@@ -88,11 +88,11 @@ Route::delete('supplier/{id}','SupplierController@hapus');
 Route::delete('supplier/{id}/permanen','SupplierController@hapusPermanen');
 
 //Pengadaan
-Route::get('pengadaan','PengadaanController@index');
-Route::get('pengadaan/cariPengadaan/{cari}','PengadaanController@cariPengadaan');
-Route::post('pengadaan','PengadaanController@tambah');
-Route::put('pengadaan/{id}','PengadaanController@edit');
-Route::delete('pengadaan/{id}','PengadaanController@hapus');
+Route::get('transaksiPengadaan','TransaksiPengadaanController@index');
+Route::get('transaksiPengadaan/cariPengadaan/{cari}','TransaksiPengadaanController@cariPengadaan');
+Route::post('transaksiPengadaan','TransaksiPengadaanController@tambah');
+Route::put('transaksiPengadaan/{id}','TransaksiPengadaanController@edit');
+Route::delete('transaksiPengadaan/{id}','TransaksiPengadaanController@hapus');
 
 //TransaksiProduk
 Route::get('transaksiProduk','TransaksiProdukController@index');

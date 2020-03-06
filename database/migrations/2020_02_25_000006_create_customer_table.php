@@ -19,8 +19,8 @@ class CreateCustomerTable extends Migration
             $table->string('alamat');
             $table->date('tglLahir');
             $table->string('noHp');
-            $table->dateTime('created_at')->nullable();
-            $table->dateTime('updated_at')->nullable();
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
             $table->dateTime('deleted_at')->nullable();
             $table->string('idPegawaiLog');
 

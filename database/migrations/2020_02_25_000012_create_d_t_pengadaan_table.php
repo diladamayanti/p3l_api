@@ -21,7 +21,7 @@ class CreateDTPengadaanTable extends Migration
             $table->double('subTotal');
         
             $table->primary('noPO','idProduk');
-            $table->foreign('noPO')->references('noPO')->on('pengadaan');
+            $table->foreign('noPO')->references('noPO')->on('transaksiPengadaan');
             $table->foreign('idProduk')->references('idProduk')->on('produk');
         });
     }

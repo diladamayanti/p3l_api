@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePengadaanTable extends Migration
+class CreateTransaksiPengadaanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreatePengadaanTable extends Migration
      */
     public function up()
     {
-        Schema::create('pengadaan', function (Blueprint $table) {
+        Schema::create('transaksiPengadaan', function (Blueprint $table) {
             $table->string('noPO');
             $table->date('tglPengadaan');
             $table->integer('idSupplier')->unsigned();
             $table->string('status');
             $table->double('totalHarga');
-            $table->dateTime('created_at')->nullable();
-            $table->dateTime('updated_at')->nullable();
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
 
             $table->primary('noPO');
             $table->foreign('idSupplier')->references('idSupplier')->on('supplier');
@@ -34,6 +34,6 @@ class CreatePengadaanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pengadaan');
+        Schema::dropIfExists('transaksiPengadaan');
     }
 }

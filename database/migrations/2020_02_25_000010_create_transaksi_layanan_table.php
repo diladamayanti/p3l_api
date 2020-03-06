@@ -22,8 +22,8 @@ class CreateTransaksiLayananTable extends Migration
             $table->integer('idCustomer')->unsigned();
             $table->string('idCustomerService');
             $table->string('idKasir');
-            $table->dateTime('created_at')->nullable();
-            $table->dateTime('updated_at')->nullable();
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
 
             $table->primary('noTransaksi');
             $table->foreign('idCustomer')->references('idCustomer')->on('customer');
