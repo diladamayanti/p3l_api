@@ -14,6 +14,7 @@ Route::post('produk/{id}/restore','ProdukController@restore');
 Route::post('produk/update/{id}','ProdukController@edit');
 Route::delete('produk/{id}','ProdukController@hapus');
 Route::delete('produk/{id}/permanen','ProdukController@hapusPermanen');
+Route::post('produk/uploadImage','ProdukController@uploadImage');
 
 //jenisHewan
 Route::get('jenisHewan','JenisHewanController@index');
