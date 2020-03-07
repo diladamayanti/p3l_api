@@ -433,5 +433,53 @@ class PegawaiController extends Controller
         }
     }
 
-  
+    public function uploadImage(Request $request)
+    {
+        $pegawai = new Pegawai;
+        $pegawai->NIP = $this->generateNIP();
+        $pegawai->gambar = $this->upload(); 
+        $pegawai->created_at = Carbon::now();
+        $pegawai->updated_at = Carbon::now();
+
+        if($pegawai->gambar == 1)
+        {
+            $status = 500;
+            $response =[
+                'status' => 'Error',
+                'data' => [],
+                'message' =>  "Gambar harus memiliki format jpg or jpeg or png or gif..."
+            ];
+        }
+        else
+        {
+        
+            try{
+                $success = $pegawai->save();
+                $status = 200;
+                $response = [
+                    'status' => 'Success',
+                    'data' => [
+                        'NIP'=>$pegawai->NIP,
+                        'namaPegawai'=>$pegawai->namaPegawai,
+                        'alamat'=>$pegawai->alamat,
+                        'tglLahir'=>$pegawai->tglLahir,
+                        'noHp'=>$pegawai->noHp,
+                        'jabatan'=>$pegawai->jabatan,
+                        'kataSandi'=>$pegawai->kataSandi,
+                        'created_at'=>$pegawai->created_at,
+                        'updated_at'=>$pegawai->updated_at,
+                    ]
+                ];   
+            }
+            catch(\Illuminate\Database\QueryException $e){
+                $status = 500;
+                $response = [
+                    'status' => 'Error',
+                    'data' => [],
+                    'message' => $e
+                ];
+            }
+        }
+        return response()->json($response,$status);
+    }
 }
