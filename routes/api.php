@@ -51,6 +51,7 @@ Route::get('pegawai','PegawaiController@index');
 Route::get('pegawai/{NIP}/gambar','PegawaiController@tampilGambar');
 Route::get('pegawai/softDelete','PegawaiController@tampilSoftDelete');
 Route::get('pegawai/cariPegawai/{cari}','PegawaiController@cariPegawai');
+Route::post('pegawai/login','PegawaiController@login');
 Route::post('pegawai','PegawaiController@tambah');
 Route::post('pegawai/{NIP}/restore','PegawaiController@restore');
 Route::post('pegawai/update/{NIP}','PegawaiController@edit');

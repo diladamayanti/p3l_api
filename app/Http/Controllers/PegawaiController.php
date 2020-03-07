@@ -70,6 +70,7 @@ class PegawaiController extends Controller
         $pegawai->gambar = $this->upload(); 
         $pegawai->created_at = Carbon::now();
         $pegawai->updated_at = Carbon::now();
+        $pegawai->idPegawaiLog = $request['idPegawaiLog'];
 
         if($pegawai->gambar == 1)
         {
@@ -132,6 +133,7 @@ class PegawaiController extends Controller
             $pegawai->jabatan = $request['jabatan'];
             $pegawai->kataSandi =  md5($request['kataSandi']);
             $pegawai->updated_at = Carbon::now();
+            $pegawai->idPegawaiLog = $request['idPegawaiLog'];
             
             if($_FILES['gambar']['error'] != 4){
                 $pegawai->gambar = $this->upload();
@@ -289,6 +291,50 @@ class PegawaiController extends Controller
         }
     }
 
+    public function login(Request $request)
+    {
+        $pegawai = Pegawai::find($request['NIP']);
+
+        if(isset($pegawai))
+        { 
+            if($pegawai->kataSandi == md5($request->kataSandi))
+            {
+                $status=200;
+                $response = [
+                    'status' => 'Success',
+                    'data' => [
+                        'NIP'=>$pegawai->getKey(),
+                        'namaPegawai'=>$pegawai->namaPegawai,
+                        'alamat'=>$pegawai->alamat,
+                        'tglLahir'=>$pegawai->tglLahir,
+                        'noHp'=>$pegawai->noHp,
+                        'jabatan'=>$pegawai->jabatan,
+                        'kataSandi'=>$pegawai->kataSandi,
+                        'created_at'=>$pegawai->created_at,
+                        'updated_at'=>$pegawai->updated_at,
+                    ]
+                ]; 
+            }
+            else
+            {
+                $status=500;
+                $response = [
+                    'status' => 'Kata sandi tidak cocok.',
+                    'data' => []
+                ]; 
+            }
+        }
+        else
+        {
+            $status=404;
+            $response = [
+                'status' => 'Pegawai Not Found',
+                'data' => []
+            ];
+        }
+        return response()->json($response,$status); 
+    }
+
     function upload(){
 
         $namaFile = $_FILES['gambar']['name'];
@@ -374,8 +420,12 @@ class PegawaiController extends Controller
 
         if (isset($pegawai)) 
         {
+            if($pegawai->NIP=="Owner")
+            {
+                return 'P'.date('y').'1';
+            }
             $noTerakhir=substr($pegawai->NIP,4);
-            return 'P' . date('y') . '-' .($noTerakhir + 1);
+            return 'P' . date('y') .($noTerakhir + 1);
         } 
         else 
         {
