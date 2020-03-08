@@ -10,7 +10,7 @@ class JenisHewanController extends Controller
 {
     public function index()
     {
-        $jenisHewan = JenisHewan::where('deleted_at',null);
+        $jenisHewan = JenisHewan::where('deleted_at',null)->get();
         $response = [
             'status' => 'Success',
             'data' => $jenisHewan
@@ -19,7 +19,7 @@ class JenisHewanController extends Controller
     }
 
     public function tampilSoftDelete(){
-        $jenisHewan = JenisHewan::where('deleted_at',!null);
+        $jenisHewan = JenisHewan::where('deleted_at',!null)->get();
         $response = [
             'status' => 'Success',
             'data' => $jenisHewan

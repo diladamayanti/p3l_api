@@ -10,7 +10,7 @@ class UkuranHewanController extends Controller
 {
     public function index()
     {
-        $ukuranHewan = UkuranHewan::where('deleted_at',null);
+        $ukuranHewan = UkuranHewan::all();
         $response = [
             'status' => 'Success',
             'data' => $ukuranHewan

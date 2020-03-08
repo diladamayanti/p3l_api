@@ -10,7 +10,7 @@ class TransaksiLayananController extends Controller
 {
     public function index()
     {
-        $transaksiLayanan = TransaksiLayanan::where('deleted_at',null);
+        $transaksiLayanan = TransaksiLayanan::all();
         $response = [
             'status' => 'Success',
             'data' => $transaksiLayanan

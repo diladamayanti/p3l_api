@@ -10,7 +10,7 @@ class HewanController extends Controller
 {
     public function index()
     {
-        $hewan = Hewan::where('deleted_at',null);
+        $hewan = Hewan::where('deleted_at',null)->get();
         $response = [
             'status' => 'Success',
             'data' => $hewan
@@ -20,7 +20,7 @@ class HewanController extends Controller
 
     public function tampilSoftDelete()
     {
-        $hewan = Hewan::where('deleted_at',!null);
+        $hewan = Hewan::where('deleted_at',!null)->get();
         $response = [
             'status' => 'Success',
             'data' => $hewan

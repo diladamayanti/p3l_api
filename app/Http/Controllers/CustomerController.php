@@ -10,7 +10,7 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        $customer = Customer::where('deleted_at',null);
+        $customer = Customer::where('deleted_at',null)->get();
         $response = [
             'status' => 'Success',
             'data' => $customer
@@ -19,7 +19,7 @@ class CustomerController extends Controller
     }
 
     public function tampilSoftDelete(){
-        $customer = Customer::where('deleted_at',!null);
+        $customer = Customer::where('deleted_at',!null)->get();
         $response = [
             'status' => 'Success',
             'data' => $customer

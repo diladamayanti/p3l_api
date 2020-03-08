@@ -10,7 +10,7 @@ class LayananController extends Controller
 {
     public function index()
     {
-        $layanan = Layanan::where('deleted_at',null);
+        $layanan = Layanan::where('deleted_at',null)->get();
         $response = [
             'status' => 'Success',
             'data' => $layanan
@@ -20,7 +20,7 @@ class LayananController extends Controller
 
     public function tampilSoftDelete()
     {
-        $layanan = Layanan::where('deleted_at',!null);
+        $layanan = Layanan::where('deleted_at',!null)->get();
         $response = [
             'status' => 'Success',
             'data' => $layanan

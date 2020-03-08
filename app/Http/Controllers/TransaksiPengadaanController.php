@@ -10,7 +10,7 @@ class TransaksiPengadaanController extends Controller
 {
     public function index()
     {
-        $transaksiPengadaan = TransaksiPengadaan::where('deleted_at',null);
+        $transaksiPengadaan = TransaksiPengadaan::all();
         $response = [
             'status' => 'Success',
             'data' => $transaksiPengadaan

@@ -10,7 +10,7 @@ class TransaksiProdukController extends Controller
 {
     public function index()
     {
-        $transaksiProduk = TransaksiProduk::where('deleted_at',null);
+        $transaksiProduk = TransaksiProduk::all();
         $response = [
             'status' => 'Success',
             'data' => $transaksiProduk
