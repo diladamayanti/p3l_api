@@ -10,7 +10,8 @@ class PengadaanController extends Controller
 {
     public function index()
     {
-        $pengadaan = Pengadaan::where('deleted_at',null);
+        $pengadaan = Pengadaan::all('noPO', 'tglPengadaan', 'idSupplier', 'status', 'totalHarga', 'created_at', 'updated_at')
+        ->where('deleted_at',null);
         $response = [
             'status' => 'Success',
             'data' => $pengadaan
@@ -43,14 +44,14 @@ class PengadaanController extends Controller
             ];
         }
         else{
-                
+
             $status=200;
             $response = [
                 'status' => 'Success',
                 'data' => $pengadaan
             ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response,$status);
     }
 
     public function tambah(Request $request)
@@ -70,7 +71,7 @@ class PengadaanController extends Controller
             $response = [
                 'status' => 'Success',
                 'data' => $pengadaan
-            ];   
+            ];
         }
         catch(\Illuminate\Database\QueryException $e){
             $status = 500;
@@ -99,14 +100,14 @@ class PengadaanController extends Controller
             $pengadaan->idSupplier = $request['idSupplier'];
             $pengadaan->status = $request['status'];
             $pengadaan->updated_at = Carbon::now();
-            
+
             try{
                 $success = $pengadaan->save();
                 $status = 200;
                 $response = [
                     'status' => 'Success',
                     'data' => $pengadaan
-                ];  
+                ];
             }
             catch(\Illuminate\Database\QueryException $e){
                 $status = 500;
@@ -118,7 +119,7 @@ class PengadaanController extends Controller
             }
         }
 
-        return response()->json($response,$status); 
+        return response()->json($response,$status);
     }
 
     public function hapus($id)
@@ -144,7 +145,7 @@ class PengadaanController extends Controller
                 'data' => $pengadaan
             ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response,$status);
     }
 
     public function restore($id)
@@ -170,7 +171,7 @@ class PengadaanController extends Controller
                 'data' => $pengadaan
             ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response,$status);
     }
 
     public function hapusPermanen($id)
@@ -193,7 +194,7 @@ class PengadaanController extends Controller
                 'data' => $pengadaan
             ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response,$status);
     }
 
     public function generateNoPO()
@@ -201,17 +202,17 @@ class PengadaanController extends Controller
         $pengadaan = Pengadaan::whereDate('created_at', date('Y-m-d'))
         ->orderBy('created_at', 'desc')->first();
 
-        if (isset($pengadaan)) 
+        if (isset($pengadaan))
         {
             $noTerakhir=substr($pengadaan->noPO,14);
             if($noTerakhir<9)
                 return 'PO-' . date('Y-m-d') . '-0' . ($noTerakhir + 1);
-            else    
+            else
                 return 'PO-' . date('Y-m-d') . '-' . ($noTerakhir + 1);
-        } 
-        else 
+        }
+        else
         {
             return 'PO-' . date('Y-m-d') . '-01';
-        }        
+        }
     }
 }

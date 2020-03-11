@@ -10,7 +10,8 @@ class JenisHewanController extends Controller
 {
     public function index()
     {
-        $jenisHewan = JenisHewan::where('deleted_at', null)->get();
+        $jenisHewan = JenisHewan::all('idJenis', 'namaJenis', 'created_at', 'updated_at')
+        ->where('deleted_at',null);
         $response = [
             'status' => 'Success',
             'data' => $jenisHewan
