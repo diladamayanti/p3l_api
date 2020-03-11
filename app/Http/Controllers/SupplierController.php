@@ -10,7 +10,8 @@ class SupplierController extends Controller
 {
     public function index()
     {
-        $supplier = Supplier::where('deleted_at',null)->get();
+        $supplier = Supplier::all('idSupplier', 'namaSupplier', 'alamat', 'noHp', 'created_at', 'updated_at')
+        ->where('deleted_at',null);
         $response = [
             'status' => 'Success',
             'data' => $supplier
@@ -41,14 +42,14 @@ class SupplierController extends Controller
             ];
         }
         else{
-                
+
             $status=200;
             $response = [
                 'status' => 'Success',
                 'data' => $supplier
             ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response,$status);
     }
 
     public function tambah(Request $request)
@@ -67,7 +68,7 @@ class SupplierController extends Controller
             $response = [
                 'status' => 'Success',
                 'data' => $supplier
-            ];   
+            ];
         }
         catch(\Illuminate\Database\QueryException $e){
             $status = 500;
@@ -97,14 +98,14 @@ class SupplierController extends Controller
             $supplier->noHp = $request['noHp'];
             $supplier->updated_at = Carbon::now();
             $supplier->idPegawaiLog = $request['idPegawaiLog'];
-            
+
             try{
                 $success = $supplier->save();
                 $status = 200;
                 $response = [
                     'status' => 'Success',
                     'data' => $supplier
-                ];  
+                ];
             }
             catch(\Illuminate\Database\QueryException $e){
                 $status = 500;
@@ -115,7 +116,7 @@ class SupplierController extends Controller
                 ];
             }
         }
-        return response()->json($response,$status); 
+        return response()->json($response,$status);
     }
 
     public function hapus($id)
@@ -139,7 +140,7 @@ class SupplierController extends Controller
                 'data' => $supplier
             ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response,$status);
     }
 
     public function restore($id)
@@ -166,7 +167,7 @@ class SupplierController extends Controller
                 'data' => $supplier
             ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response,$status);
     }
 
     public function hapusPermanen($id)
@@ -189,6 +190,6 @@ class SupplierController extends Controller
                 'data' => $supplier
             ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response,$status);
     }
 }

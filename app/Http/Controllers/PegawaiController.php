@@ -47,14 +47,14 @@ class PegawaiController extends Controller
             ];
         }
         else{
-                
+
             $status=200;
             $response = [
                 'status' => 'Success',
                 'data' => $pegawai
             ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response,$status);
     }
 
     public function tambah(Request $request)
@@ -67,7 +67,7 @@ class PegawaiController extends Controller
         $pegawai->noHp = $request['noHp'];
         $pegawai->jabatan = $request['jabatan'];
         $pegawai->kataSandi = md5($request['kataSandi']);
-        $pegawai->gambar = $this->upload(); 
+        $pegawai->gambar = $this->upload();
         $pegawai->created_at = Carbon::now();
         $pegawai->updated_at = Carbon::now();
         $pegawai->idPegawaiLog = $request['idPegawaiLog'];
@@ -83,7 +83,7 @@ class PegawaiController extends Controller
         }
         else
         {
-       
+
             try{
                 $success = $pegawai->save();
                 $status = 200;
@@ -100,7 +100,7 @@ class PegawaiController extends Controller
                         'created_at'=>$pegawai->created_at,
                         'updated_at'=>$pegawai->updated_at,
                     ]
-                ];   
+                ];
             }
             catch(\Illuminate\Database\QueryException $e){
                 $status = 500;
@@ -134,7 +134,7 @@ class PegawaiController extends Controller
             $pegawai->kataSandi =  md5($request['kataSandi']);
             $pegawai->updated_at = Carbon::now();
             $pegawai->idPegawaiLog = $request['idPegawaiLog'];
-            
+
             if($_FILES['gambar']['error'] != 4){
                 $pegawai->gambar = $this->upload();
             }
@@ -155,7 +155,7 @@ class PegawaiController extends Controller
                         'created_at'=>$pegawai->created_at,
                         'updated_at'=>$pegawai->updated_at,
                     ]
-                ];  
+                ];
             }
             catch(\Illuminate\Database\QueryException $e){
                 $status = 500;
@@ -166,7 +166,7 @@ class PegawaiController extends Controller
                 ];
             }
         }
-        return response()->json($response,$status); 
+        return response()->json($response,$status);
     }
 
     public function hapus($NIP)
@@ -198,9 +198,9 @@ class PegawaiController extends Controller
                     'created_at'=>$pegawai->created_at,
                     'updated_at'=>$pegawai->updated_at,
                 ]
-            ];   
+            ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response,$status);
     }
 
     public function restore($NIP)
@@ -235,9 +235,9 @@ class PegawaiController extends Controller
                     'created_at'=>$pegawai->created_at,
                     'updated_at'=>$pegawai->updated_at,
                 ]
-            ];  
+            ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response,$status);
     }
 
     public function hapusPermanen($NIP)
@@ -268,9 +268,9 @@ class PegawaiController extends Controller
                     'created_at'=>$pegawai->created_at,
                     'updated_at'=>$pegawai->updated_at,
                 ]
-            ];   
+            ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response,$status);
     }
 
     public function tampilGambar($NIP)
@@ -283,7 +283,7 @@ class PegawaiController extends Controller
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-            return response()->json($response,$status); 
+            return response()->json($response,$status);
         }
         else{
             return response()->make($pegawai->gambar, 200, array(
@@ -296,7 +296,7 @@ class PegawaiController extends Controller
         $pegawai = Pegawai::find($request['NIP']);
 
         if(isset($pegawai))
-        { 
+        {
             if($pegawai->kataSandi == md5($request->kataSandi))
             {
                 $status=200;
@@ -313,7 +313,7 @@ class PegawaiController extends Controller
                         'created_at'=>$pegawai->created_at,
                         'updated_at'=>$pegawai->updated_at,
                     ]
-                ]; 
+                ];
             }
             else
             {
@@ -321,7 +321,7 @@ class PegawaiController extends Controller
                 $response = [
                     'status' => 'Kata sandi tidak cocok.',
                     'data' => []
-                ]; 
+                ];
             }
         }
         else
@@ -332,7 +332,7 @@ class PegawaiController extends Controller
                 'data' => []
             ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response,$status);
     }
 
     function upload(){
@@ -349,9 +349,9 @@ class PegawaiController extends Controller
         if(!in_array($ekstensiGambar, $ekstensiGambarValid)){
             return 1;
         }
-        
+
         $gambar=$this->scaleImageFileToBlob($tmpName);
-    
+
         return $gambar;
     }
 
@@ -360,9 +360,9 @@ class PegawaiController extends Controller
         $source_pic = $file;
         $max_width = 200;
         $max_height = 200;
-    
+
         list($width, $height, $image_type) = getimagesize($file);
-    
+
         switch ($image_type)
         {
             case 1: $src = imagecreatefromgif($file); break;
@@ -370,10 +370,10 @@ class PegawaiController extends Controller
             case 3: $src = imagecreatefrompng($file); break;
             default: return '';  break;
         }
-    
+
         $x_ratio = $max_width / $width;
         $y_ratio = $max_height / $height;
-    
+
         if( ($width <= $max_width) && ($height <= $max_height) ){
             $tn_width = $width;
             $tn_height = $height;
@@ -384,9 +384,9 @@ class PegawaiController extends Controller
                 $tn_width = ceil($y_ratio * $width);
                 $tn_height = $max_height;
         }
-    
+
         $tmp = imagecreatetruecolor($tn_width,$tn_height);
-    
+
         /* Check if this image is PNG or GIF, then set if Transparent*/
         if(($image_type == 1) OR ($image_type==3))
         {
@@ -396,9 +396,9 @@ class PegawaiController extends Controller
             imagefilledrectangle($tmp, 0, 0, $tn_width, $tn_height, $transparent);
         }
         imagecopyresampled($tmp,$src,0,0,0,0,$tn_width, $tn_height,$width,$height);
-    
+
         ob_start();
-    
+
         switch ($image_type)
         {
             case 1: imagegif($tmp); break;
@@ -406,11 +406,11 @@ class PegawaiController extends Controller
             case 3: imagepng($tmp, NULL, 0); break; // no compression
             default: echo ''; break;
         }
-    
+
         $final_image = ob_get_contents();
-    
+
         ob_end_clean();
-    
+
         return $final_image;
     }
 
@@ -418,7 +418,7 @@ class PegawaiController extends Controller
     {
         $pegawai = Pegawai::orderBy('created_at', 'desc')->first();
 
-        if (isset($pegawai)) 
+        if (isset($pegawai))
         {
             if($pegawai->NIP=="Owner")
             {
@@ -426,8 +426,8 @@ class PegawaiController extends Controller
             }
             $noTerakhir=substr($pegawai->NIP,2);
             return 'P' . date('y') .($noTerakhir + 1);
-        } 
-        else 
+        }
+        else
         {
             return 'Owner';
         }
@@ -437,7 +437,7 @@ class PegawaiController extends Controller
     {
         $pegawai = new Pegawai;
         $pegawai->NIP = $this->generateNIP();
-        $pegawai->gambar = $this->upload(); 
+        $pegawai->gambar = $this->upload();
         $pegawai->created_at = Carbon::now();
         $pegawai->updated_at = Carbon::now();
 
@@ -452,7 +452,7 @@ class PegawaiController extends Controller
         }
         else
         {
-        
+
             try{
                 $success = $pegawai->save();
                 $status = 200;
@@ -469,7 +469,7 @@ class PegawaiController extends Controller
                         'created_at'=>$pegawai->created_at,
                         'updated_at'=>$pegawai->updated_at,
                     ]
-                ];   
+                ];
             }
             catch(\Illuminate\Database\QueryException $e){
                 $status = 500;

@@ -10,7 +10,8 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        $customer = Customer::where('deleted_at',null)->get();
+        $customer = Customer::all('idCustomer', 'namaCustomer', 'alamat', 'tglLahir', 'noHp', 'created_at', 'updated_at')
+        ->where('deleted_at',null);
         $response = [
             'status' => 'Success',
             'data' => $customer
@@ -41,14 +42,14 @@ class CustomerController extends Controller
             ];
         }
         else{
-                
+
             $status=200;
             $response = [
                 'status' => 'Success',
                 'data' => $customer
             ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response,$status);
     }
 
     public function tambah(Request $request)
@@ -68,7 +69,7 @@ class CustomerController extends Controller
             $response = [
                 'status' => 'Success',
                 'data' => $customer
-            ];   
+            ];
         }
         catch(\Illuminate\Database\QueryException $e){
             $status = 500;
@@ -99,14 +100,14 @@ class CustomerController extends Controller
             $customer->noHp = $request['noHp'];
             $customer->updated_at = Carbon::now();
             $customer->idPegawaiLog = $request['idPegawaiLog'];
-            
+
             try{
                 $success = $customer->save();
                 $status = 200;
                 $response = [
                     'status' => 'Success',
                     'data' => $customer
-                ];  
+                ];
             }
             catch(\Illuminate\Database\QueryException $e){
                 $status = 500;
@@ -117,7 +118,7 @@ class CustomerController extends Controller
                 ];
             }
         }
-        return response()->json($response,$status); 
+        return response()->json($response,$status);
     }
 
     public function hapus($id)
@@ -141,7 +142,7 @@ class CustomerController extends Controller
                 'data' => $customer
             ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response,$status);
     }
 
     public function restore($id)
@@ -168,7 +169,7 @@ class CustomerController extends Controller
                 'data' => $customer
             ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response,$status);
     }
 
     public function hapusPermanen($id)
@@ -191,6 +192,6 @@ class CustomerController extends Controller
                 'data' => $customer
             ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response,$status);
     }
 }
