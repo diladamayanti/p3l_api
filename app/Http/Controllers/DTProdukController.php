@@ -15,30 +15,28 @@ class DTProdukController extends Controller
             'status' => 'Success',
             'data' => $dt_Produk
         ];
-        return response()->json($response,200);
+        return response()->json($response, 200);
     }
 
     public function cariDTProduk($noTransaksi)
     {
-        $dt_Produk = DTProduk::where('noTransaksi','like','%'.$noTransaksi.'%')->get();
+        $dt_Produk = DTProduk::where('noTransaksi', 'like', '%' . $noTransaksi . '%')->get();
 
-        if(sizeof($dt_Produk)==0)
-        {
-            $status=404;
+        if (sizeof($dt_Produk) == 0) {
+            $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-        }
-        else{
-                
-            $status=200;
+        } else {
+
+            $status = 200;
             $response = [
                 'status' => 'Success',
                 'data' => $dt_Produk
             ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response, $status);
     }
 
     public function tambah(Request $request)
@@ -49,15 +47,14 @@ class DTProdukController extends Controller
         $dt_Produk->jumlah = $request['jumlah'];
         $dt_Produk->subTotal = $request['subTotal'];
 
-        try{
+        try {
             $success = $dt_Produk->save();
             $status = 200;
             $response = [
                 'status' => 'Success',
                 'data' => $dt_Produk
-            ];   
-        }
-        catch(\Illuminate\Database\QueryException $e){
+            ];
+        } catch (\Illuminate\Database\QueryException $e) {
             $status = 500;
             $response = [
                 'status' => 'Error',
@@ -65,35 +62,33 @@ class DTProdukController extends Controller
                 'message' => $e
             ];
         }
-        return response()->json($response,$status);
+        return response()->json($response, $status);
     }
 
     public function edit(Request $request, $id)
     {
         $dt_Produk = DTProduk::find($id);
 
-        if($dt_Produk==NULL){
-            $status=404;
+        if ($dt_Produk == NULL) {
+            $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-        }
-        else{
+        } else {
             $dt_Produk->noTransaksi = $request['noTransaksi'];
             $dt_Produk->idProduk = $request['idProduk'];
             $dt_Produk->jumlah = $request['jumlah'];
             $dt_Produk->subTotal = $request['subTotal'];
-            
-            try{
+
+            try {
                 $success = $dt_Produk->save();
                 $status = 200;
                 $response = [
                     'status' => 'Success',
                     'data' => $dt_Produk
-                ];  
-            }
-            catch(\Illuminate\Database\QueryException $e){
+                ];
+            } catch (\Illuminate\Database\QueryException $e) {
                 $status = 500;
                 $response = [
                     'status' => 'Error',
@@ -102,30 +97,28 @@ class DTProdukController extends Controller
                 ];
             }
         }
-        return response()->json($response,$status); 
+        return response()->json($response, $status);
     }
 
     public function hapus($id)
     {
         $dt_Produk = DTProduk::find($id);
-        
-        if($dt_Produk==NULL){
-            $status=404;
+
+        if ($dt_Produk == NULL) {
+            $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-        }
-        else{
-            try{
+        } else {
+            try {
                 $success = $dt_Produk->delete();
                 $status = 200;
                 $response = [
                     'status' => 'Success',
                     'data' => $dt_Produk
-                ];  
-            }
-            catch(\Illuminate\Database\QueryException $e){
+                ];
+            } catch (\Illuminate\Database\QueryException $e) {
                 $status = 500;
                 $response = [
                     'status' => 'Error',
@@ -134,6 +127,6 @@ class DTProdukController extends Controller
                 ];
             }
         }
-        return response()->json($response,$status); 
+        return response()->json($response, $status);
     }
 }

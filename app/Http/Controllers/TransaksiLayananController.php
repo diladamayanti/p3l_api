@@ -15,31 +15,29 @@ class TransaksiLayananController extends Controller
             'status' => 'Success',
             'data' => $transaksiLayanan
         ];
-        return response()->json($response,200);
+        return response()->json($response, 200);
     }
 
     public function cariTransaksiLayanan($noTransaksi)
     {
-        $transaksiLayanan = TransaksiLayanan::where('noTransaksi','like','%'.$noTransaksi.'%')
-        ->where('deleted_at',null)->get();
+        $transaksiLayanan = TransaksiLayanan::where('noTransaksi', 'like', '%' . $noTransaksi . '%')
+            ->where('deleted_at', null)->get();
 
-        if(sizeof($transaksiLayanan)==0)
-        {
-            $status=404;
+        if (sizeof($transaksiLayanan) == 0) {
+            $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-        }
-        else{
-                
-            $status=200;
+        } else {
+
+            $status = 200;
             $response = [
                 'status' => 'Success',
                 'data' => $transaksiLayanan
             ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response, $status);
     }
 
     public function tambah(Request $request)
@@ -56,15 +54,14 @@ class TransaksiLayananController extends Controller
         $transaksiLayanan->created_at = Carbon::now();
         $transaksiLayanan->updated_at = Carbon::now();
 
-        try{
+        try {
             $success = $transaksiLayanan->save();
             $status = 200;
             $response = [
                 'status' => 'Success',
                 'data' => $transaksiLayanan
-            ];   
-        }
-        catch(\Illuminate\Database\QueryException $e){
+            ];
+        } catch (\Illuminate\Database\QueryException $e) {
             $status = 500;
             $response = [
                 'status' => 'Error',
@@ -72,21 +69,20 @@ class TransaksiLayananController extends Controller
                 'message' => $e
             ];
         }
-        return response()->json($response,$status);
+        return response()->json($response, $status);
     }
 
     public function edit(Request $request, $id)
     {
         $transaksiLayanan = TransaksiLayanan::find($id);
 
-        if($transaksiLayanan==NULL){
-            $status=404;
+        if ($transaksiLayanan == NULL) {
+            $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-        }
-        else{
+        } else {
             $transaksiLayanan->totalBiaya = $request['totalBiaya'];
             $transaksiLayanan->statusLayanan = $request['statusLayanan'];
             $transaksiLayanan->statusPembayaran = $request['statusPembayaran'];
@@ -94,16 +90,15 @@ class TransaksiLayananController extends Controller
             $transaksiLayanan->idCustomerService = $request['idCustomerService'];
             $transaksiLayanan->idKasir = $request['idKasir'];
             $transaksiLayanan->updated_at = Carbon::now();
-            
-            try{
+
+            try {
                 $success = $transaksiLayanan->save();
                 $status = 200;
                 $response = [
                     'status' => 'Success',
                     'data' => $transaksiLayanan
-                ];  
-            }
-            catch(\Illuminate\Database\QueryException $e){
+                ];
+            } catch (\Illuminate\Database\QueryException $e) {
                 $status = 500;
                 $response = [
                     'status' => 'Error',
@@ -113,47 +108,42 @@ class TransaksiLayananController extends Controller
             }
         }
 
-        return response()->json($response,$status); 
+        return response()->json($response, $status);
     }
 
     public function hapus($id)
     {
         $transaksiLayanan = TransaksiLayanan::find($id);
 
-        if($transaksiLayanan==NULL || $transaksiLayanan->deleted_at != NULL){
-            $status=404;
+        if ($transaksiLayanan == NULL || $transaksiLayanan->deleted_at != NULL) {
+            $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-        }
-        else
-        {
+        } else {
             $transaksiLayanan->delete();
-            $status=200;
+            $status = 200;
             $response = [
                 'status' => 'Success',
                 'data' => $transaksiLayanan
             ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response, $status);
     }
 
     public function generateNoTransaksi()
     {
         $transaksiLayanan = TransaksiLayanan::whereDate('created_at', date('Y-m-d'))
-        ->orderBy('created_at', 'desc')->first();
+            ->orderBy('created_at', 'desc')->first();
 
-        if (isset($transaksiLayanan)) 
-        {
-            $noTerakhir=substr($transaksiLayanan->noTransaksi,10);
-            if($noTerakhir<9)
+        if (isset($transaksiLayanan)) {
+            $noTerakhir = substr($transaksiLayanan->noTransaksi, 10);
+            if ($noTerakhir < 9)
                 return 'LY-' . date('ymd') . '-0' . ($noTerakhir + 1);
             else
                 return 'LY-' . date('ymd') . '-' . ($noTerakhir + 1);
-        } 
-        else 
-        {
+        } else {
             return 'LY-' . date('ymd') . '-01';
         }
     }
