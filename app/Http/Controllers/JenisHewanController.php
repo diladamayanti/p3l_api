@@ -10,45 +10,44 @@ class JenisHewanController extends Controller
 {
     public function index()
     {
-        $jenisHewan = JenisHewan::where('deleted_at',null)->get();
+        $jenisHewan = JenisHewan::where('deleted_at', null)->get();
         $response = [
             'status' => 'Success',
             'data' => $jenisHewan
         ];
-        return response()->json($response,200);
+        return response()->json($response, 200);
     }
 
-    public function tampilSoftDelete(){
-        $jenisHewan = JenisHewan::where('deleted_at',!null)->get();
+    public function tampilSoftDelete()
+    {
+        $jenisHewan = JenisHewan::where('deleted_at', !null)->get();
         $response = [
             'status' => 'Success',
             'data' => $jenisHewan
         ];
-        return response()->json($response,200);
+        return response()->json($response, 200);
     }
 
     public function cariJenis($cari)
     {
-        $jenisHewan = JenisHewan::where('id','like','%'.$cari.'%','or','namaJenis','like','%'.$cari.'%')
-        ->where('deleted_at',null)->get();
+        $jenisHewan = JenisHewan::where('id', 'like', '%' . $cari . '%', 'or', 'namaJenis', 'like', '%' . $cari . '%')
+            ->where('deleted_at', null)->get();
 
-        if(sizeof($jenisHewan)==0)
-        {
-            $status=404;
+        if (sizeof($jenisHewan) == 0) {
+            $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-        }
-        else{
-                
-            $status=200;
+        } else {
+
+            $status = 200;
             $response = [
                 'status' => 'Success',
                 'data' => $jenisHewan
             ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response, $status);
     }
 
     public function tambah(Request $request)
@@ -59,15 +58,14 @@ class JenisHewanController extends Controller
         $jenisHewan->updated_at = Carbon::now();
         $jenisHewan->idPegawaiLog = $request['idPegawaiLog'];
 
-        try{
+        try {
             $success = $jenisHewan->save();
             $status = 200;
             $response = [
                 'status' => 'Success',
                 'data' => $jenisHewan
-            ];   
-        }
-        catch(\Illuminate\Database\QueryException $e){
+            ];
+        } catch (\Illuminate\Database\QueryException $e) {
             $status = 500;
             $response = [
                 'status' => 'Error',
@@ -75,33 +73,31 @@ class JenisHewanController extends Controller
                 'message' => $e
             ];
         }
-        return response()->json($response,$status);
+        return response()->json($response, $status);
     }
 
     public function edit(Request $request, $id)
     {
         $jenisHewan = JenisHewan::find($id);
-        if($jenisHewan==NULL){
-            $status=404;
+        if ($jenisHewan == NULL) {
+            $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-        }
-        else{
+        } else {
             $jenisHewan->namaJenis = $request['namaJenis'];
             $jenisHewan->updated_at = Carbon::now();
             $jenisHewan->idPegawaiLog = $request['idPegawaiLog'];
-            
-            try{
+
+            try {
                 $success = $jenisHewan->save();
                 $status = 200;
                 $response = [
                     'status' => 'Success',
                     'data' => $jenisHewan
-                ];  
-            }
-            catch(\Illuminate\Database\QueryException $e){
+                ];
+            } catch (\Illuminate\Database\QueryException $e) {
                 $status = 500;
                 $response = [
                     'status' => 'Error',
@@ -111,80 +107,74 @@ class JenisHewanController extends Controller
             }
         }
 
-        return response()->json($response,$status); 
+        return response()->json($response, $status);
     }
 
     public function hapus($id)
     {
         $jenisHewan = JenisHewan::find($id);
 
-        if($jenisHewan==NULL || $jenisHewan->deleted_at != NULL){
-            $status=404;
+        if ($jenisHewan == NULL || $jenisHewan->deleted_at != NULL) {
+            $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-        }
-        else
-        {
+        } else {
             $jenisHewan->deleted_at = Carbon::now();
             $jenisHewan->save();
-            $status=200;
+            $status = 200;
             $response = [
                 'status' => 'Success',
                 'data' => $jenisHewan
             ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response, $status);
     }
 
-    public function restore($id)
+    public function restore(Request $request, $id)
     {
         $jenisHewan = JenisHewan::find($id);
 
-        if($jenisHewan==NULL){
-            $status=404;
+        if ($jenisHewan == NULL) {
+            $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-        }
-        else
-        {
+        } else {
             $jenisHewan->updated_at = Carbon::now();
             $jenisHewan->deleted_at = NULL;
             $jenisHewan->idPegawaiLog = $request['idPegawaiLog'];
 
             $jenisHewan->save();
-            $status=200;
+            $status = 200;
             $response = [
                 'status' => 'Success',
                 'data' => $jenisHewan
             ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response, $status);
     }
 
     public function hapusPermanen($id)
     {
         $jenisHewan = JenisHewan::find($id);
 
-        if($jenisHewan==NULL || $jenisHewan->deleted_at != NULL){
-            $status=404;
+        if ($jenisHewan == NULL || $jenisHewan->deleted_at != NULL) {
+            $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-        }
-        else
-        {
+        } else {
             $jenisHewan->delete();
-            $status=200;
+            $status = 200;
             $response = [
                 'status' => 'Success',
                 'data' => $jenisHewan
             ];
         }
-        return response()->json($response,$status); 
+        return response()->json($response, $status);
     }
 }

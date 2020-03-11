@@ -16,40 +16,50 @@ class SupplierController extends Controller
             'status' => 'Success',
             'data' => $supplier
         ];
-        return response()->json($response,200);
+        return response()->json($response, 200);
     }
 
-    public function tampilSoftDelete(){
-        $supplier = Supplier::where('deleted_at',!null)->get();
+    public function tampilSoftDelete()
+    {
+        $supplier = Supplier::where('deleted_at', !null)->get();
         $response = [
             'status' => 'Success',
             'data' => $supplier
         ];
-        return response()->json($response,200);
+        return response()->json($response, 200);
     }
 
     public function cariSupplier($cari)
     {
-        $supplier = Supplier::where('idSupplier','like','%'.$cari.'%','or','namaSupplier','like','%'.$cari.'%')
-        ->where('deleted_at',null)->get();
+        $supplier = Supplier::where('idSupplier', 'like', '%' . $cari . '%', 'or', 'namaSupplier', 'like', '%' . $cari . '%')
+            ->where('deleted_at', null)->get();
 
-        if(sizeof($supplier)==0)
-        {
-            $status=404;
+        if (sizeof($supplier) == 0) {
+            $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
+<<<<<<< HEAD
         }
         else{
 
             $status=200;
+=======
+        } else {
+
+            $status = 200;
+>>>>>>> ee4e1684d12fd237df605ac25e7ae8c91777a5e1
             $response = [
                 'status' => 'Success',
                 'data' => $supplier
             ];
         }
+<<<<<<< HEAD
         return response()->json($response,$status);
+=======
+        return response()->json($response, $status);
+>>>>>>> ee4e1684d12fd237df605ac25e7ae8c91777a5e1
     }
 
     public function tambah(Request $request)
@@ -62,15 +72,19 @@ class SupplierController extends Controller
         $supplier->updated_at = Carbon::now();
         $supplier->idPegawaiLog = $request['idPegawaiLog'];
 
-        try{
+        try {
             $success = $supplier->save();
             $status = 200;
             $response = [
                 'status' => 'Success',
                 'data' => $supplier
             ];
+<<<<<<< HEAD
         }
         catch(\Illuminate\Database\QueryException $e){
+=======
+        } catch (\Illuminate\Database\QueryException $e) {
+>>>>>>> ee4e1684d12fd237df605ac25e7ae8c91777a5e1
             $status = 500;
             $response = [
                 'status' => 'Error',
@@ -78,36 +92,43 @@ class SupplierController extends Controller
                 'message' => $e
             ];
         }
-        return response()->json($response,$status);
+        return response()->json($response, $status);
     }
 
     public function edit(Request $request, $id)
     {
         $supplier = Supplier::find($id);
 
-        if($supplier==NULL){
-            $status=404;
+        if ($supplier == NULL) {
+            $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-        }
-        else{
+        } else {
             $supplier->namaSupplier = $request['namaSupplier'];
             $supplier->alamat = $request['alamat'];
             $supplier->noHp = $request['noHp'];
             $supplier->updated_at = Carbon::now();
             $supplier->idPegawaiLog = $request['idPegawaiLog'];
 
+<<<<<<< HEAD
             try{
+=======
+            try {
+>>>>>>> ee4e1684d12fd237df605ac25e7ae8c91777a5e1
                 $success = $supplier->save();
                 $status = 200;
                 $response = [
                     'status' => 'Success',
                     'data' => $supplier
                 ];
+<<<<<<< HEAD
             }
             catch(\Illuminate\Database\QueryException $e){
+=======
+            } catch (\Illuminate\Database\QueryException $e) {
+>>>>>>> ee4e1684d12fd237df605ac25e7ae8c91777a5e1
                 $status = 500;
                 $response = [
                     'status' => 'Error',
@@ -116,80 +137,90 @@ class SupplierController extends Controller
                 ];
             }
         }
+<<<<<<< HEAD
         return response()->json($response,$status);
+=======
+        return response()->json($response, $status);
+>>>>>>> ee4e1684d12fd237df605ac25e7ae8c91777a5e1
     }
 
     public function hapus($id)
     {
         $supplier = Supplier::find($id);
 
-        if($supplier==NULL || $supplier->deleted_at != NULL){
-            $status=404;
+        if ($supplier == NULL || $supplier->deleted_at != NULL) {
+            $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-        }
-        else
-        {
+        } else {
             $supplier->deleted_at = Carbon::now();
             $supplier->save();
-            $status=200;
+            $status = 200;
             $response = [
                 'status' => 'Success',
                 'data' => $supplier
             ];
         }
+<<<<<<< HEAD
         return response()->json($response,$status);
+=======
+        return response()->json($response, $status);
+>>>>>>> ee4e1684d12fd237df605ac25e7ae8c91777a5e1
     }
 
-    public function restore($id)
+    public function restore(Request $request, $id)
     {
         $supplier = Supplier::find($id);
 
-        if($supplier==NULL){
-            $status=404;
+        if ($supplier == NULL) {
+            $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-        }
-        else
-        {
+        } else {
             $supplier->updated_at = Carbon::now();
             $supplier->deleted_at = NULL;
             $supplier->idPegawaiLog = $request['idPegawaiLog'];
 
             $supplier->save();
-            $status=200;
+            $status = 200;
             $response = [
                 'status' => 'Success',
                 'data' => $supplier
             ];
         }
+<<<<<<< HEAD
         return response()->json($response,$status);
+=======
+        return response()->json($response, $status);
+>>>>>>> ee4e1684d12fd237df605ac25e7ae8c91777a5e1
     }
 
     public function hapusPermanen($id)
     {
         $supplier = Supplier::find($id);
 
-        if($supplier==NULL || $supplier->deleted_at != NULL){
-            $status=404;
+        if ($supplier == NULL || $supplier->deleted_at != NULL) {
+            $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-        }
-        else
-        {
+        } else {
             $supplier->delete();
-            $status=200;
+            $status = 200;
             $response = [
                 'status' => 'Success',
                 'data' => $supplier
             ];
         }
+<<<<<<< HEAD
         return response()->json($response,$status);
+=======
+        return response()->json($response, $status);
+>>>>>>> ee4e1684d12fd237df605ac25e7ae8c91777a5e1
     }
 }
