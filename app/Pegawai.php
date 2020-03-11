@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Pegawai extends Model
 {
     protected $table = 'pegawai';
-    protected $primaryKey = 'NIP'; 
+    protected $primaryKey = 'NIP';
     public $incrementing = false;
+
+    public function customer()
+    {
+        return $this->hasMany('App\Customer');
+    }
 }
