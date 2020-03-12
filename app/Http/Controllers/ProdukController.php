@@ -118,7 +118,7 @@ class ProdukController extends Controller
             $produk->stok = $request['stok'];
             $produk->jumlahMinimal = $request['jumlahMinimal'];
             $produk->updated_at = Carbon::now();
-            $produk->idPegawaiLog = $request['idPegawaiLog'];
+            //$produk->idPegawaiLog = $request['idPegawaiLog'];
 
             if ($_FILES['gambar']['error'] != 4) {
                 $produk->gambar = $this->upload();
