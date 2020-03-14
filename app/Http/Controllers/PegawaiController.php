@@ -44,7 +44,6 @@ class PegawaiController extends Controller
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-<<<<<<< HEAD
         }
         else{
 
