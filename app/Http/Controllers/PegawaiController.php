@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Pegawai;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use finfo;
+
 
 class PegawaiController extends Controller
 {
@@ -46,23 +46,13 @@ class PegawaiController extends Controller
             ];
         }
         else{
-
             $status=200;
-=======
-        } else {
-
-            $status = 200;
->>>>>>> ee4e1684d12fd237df605ac25e7ae8c91777a5e1
             $response = [
                 'status' => 'Success',
                 'data' => $pegawai
             ];
         }
-<<<<<<< HEAD
         return response()->json($response,$status);
-=======
-        return response()->json($response, $status);
->>>>>>> ee4e1684d12fd237df605ac25e7ae8c91777a5e1
     }
 
     public function tambah(Request $request)
@@ -87,17 +77,11 @@ class PegawaiController extends Controller
                 'data' => [],
                 'message' =>  "Gambar harus memiliki format jpg or jpeg or png or gif..."
             ];
-<<<<<<< HEAD
         }
         else
         {
 
             try{
-=======
-        } else {
-
-            try {
->>>>>>> ee4e1684d12fd237df605ac25e7ae8c91777a5e1
                 $success = $pegawai->save();
                 $status = 200;
                 $response = [
