@@ -119,11 +119,11 @@ class ProdukController extends Controller
             $produk->stok = $request['stok'];
             $produk->jumlahMinimal = $request['jumlahMinimal'];
             $produk->updated_at = Carbon::now();
-            //$produk->idPegawaiLog = $request['idPegawaiLog'];
+            $produk->idPegawaiLog = $request['idPegawaiLog'];
 
-            // if ($_FILES['gambar']['error'] != 4) {
-            //     $produk->gambar = $this->upload();
-            // }
+            if ($_FILES['gambar']['error'] != 4) {
+                $produk->gambar = $this->upload();
+            }
 
             try {
                 $success = $produk->save();
@@ -293,8 +293,8 @@ class ProdukController extends Controller
     {
 
         $source_pic = $file;
-        $max_width = 200;
-        $max_height = 200;
+        $max_width = 500;
+        $max_height = 500;
 
         list($width, $height, $image_type) = getimagesize($file);
 

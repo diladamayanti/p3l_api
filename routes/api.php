@@ -127,16 +127,8 @@ Route::put('dtPengadaan/{id}', 'DTPengadaanController@edit');
 Route::delete('dtPengadaan/{id}', 'DTPengadaanController@hapus');
 
 //Detail Transaksi Produk
-<<<<<<< HEAD
 Route::get('dtProduk', 'DTProdukController@index');
 Route::get('dtProduk/cariDTProduk/{noTransaksi}', 'DTProdukController@cariDTProduk');
 Route::post('dtProduk', 'DTProdukController@tambah');
 Route::put('dtProduk/{id}', 'DTProdukController@edit');
 Route::delete('dtProduk/{id}', 'DTProdukController@hapus');
-=======
-Route::get('dtProduk','DTProdukController@index');
-Route::get('dtProduk/cariDTProduk/{noTransaksi}','DTProdukController@cariDTProduk');
-Route::post('dtProduk','DTProdukController@tambah');
-Route::put('dtProduk/{id}','DTProdukController@edit');
-Route::delete('dtProduk/{id}','DTProdukController@hapus');
->>>>>>> 77c686271a9c59b05081c1ea291bbe55ed514896
