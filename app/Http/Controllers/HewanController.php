@@ -10,7 +10,8 @@ class HewanController extends Controller
 {
     public function index()
     {
-        $hewan = Hewan::where('deleted_at', null)->get();
+        $hewan = Hewan::all('idHewan', 'namaHewan', 'tglLahir', 'idJenis', 'idCustomer', 'created_at', 'updated_at', 'idPegawaiLog')
+        ->where('deleted_at',null);
         $response = [
             'status' => 'Success',
             'data' => $hewan
