@@ -11,7 +11,7 @@ class CustomerController extends Controller
     public function index()
     {
         $customer = Customer::all('idCustomer', 'namaCustomer', 'alamat', 'tglLahir', 'noHp', 'created_at', 'updated_at')
-        ->where('deleted_at',null);
+            ->where('deleted_at', null);
         $response = [
             'status' => 'Success',
             'data' => $customer
@@ -40,26 +40,15 @@ class CustomerController extends Controller
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-<<<<<<< HEAD
-        }
-        else{
-
-            $status=200;
-=======
         } else {
 
             $status = 200;
->>>>>>> ee4e1684d12fd237df605ac25e7ae8c91777a5e1
             $response = [
                 'status' => 'Success',
                 'data' => $customer
             ];
         }
-<<<<<<< HEAD
-        return response()->json($response,$status);
-=======
         return response()->json($response, $status);
->>>>>>> ee4e1684d12fd237df605ac25e7ae8c91777a5e1
     }
 
     public function tambah(Request $request)
@@ -80,12 +69,7 @@ class CustomerController extends Controller
                 'status' => 'Success',
                 'data' => $customer
             ];
-<<<<<<< HEAD
-        }
-        catch(\Illuminate\Database\QueryException $e){
-=======
         } catch (\Illuminate\Database\QueryException $e) {
->>>>>>> ee4e1684d12fd237df605ac25e7ae8c91777a5e1
             $status = 500;
             $response = [
                 'status' => 'Error',
@@ -114,23 +98,14 @@ class CustomerController extends Controller
             $customer->updated_at = Carbon::now();
             $customer->idPegawaiLog = $request['idPegawaiLog'];
 
-<<<<<<< HEAD
-            try{
-=======
             try {
->>>>>>> ee4e1684d12fd237df605ac25e7ae8c91777a5e1
                 $success = $customer->save();
                 $status = 200;
                 $response = [
                     'status' => 'Success',
                     'data' => $customer
                 ];
-<<<<<<< HEAD
-            }
-            catch(\Illuminate\Database\QueryException $e){
-=======
             } catch (\Illuminate\Database\QueryException $e) {
->>>>>>> ee4e1684d12fd237df605ac25e7ae8c91777a5e1
                 $status = 500;
                 $response = [
                     'status' => 'Error',
@@ -139,11 +114,7 @@ class CustomerController extends Controller
                 ];
             }
         }
-<<<<<<< HEAD
-        return response()->json($response,$status);
-=======
         return response()->json($response, $status);
->>>>>>> ee4e1684d12fd237df605ac25e7ae8c91777a5e1
     }
 
     public function hapus($id)
@@ -165,11 +136,7 @@ class CustomerController extends Controller
                 'data' => $customer
             ];
         }
-<<<<<<< HEAD
-        return response()->json($response,$status);
-=======
         return response()->json($response, $status);
->>>>>>> ee4e1684d12fd237df605ac25e7ae8c91777a5e1
     }
 
     public function restore(Request $request, $id)
@@ -194,11 +161,7 @@ class CustomerController extends Controller
                 'data' => $customer
             ];
         }
-<<<<<<< HEAD
-        return response()->json($response,$status);
-=======
         return response()->json($response, $status);
->>>>>>> ee4e1684d12fd237df605ac25e7ae8c91777a5e1
     }
 
     public function hapusPermanen($id)
@@ -219,10 +182,6 @@ class CustomerController extends Controller
                 'data' => $customer
             ];
         }
-<<<<<<< HEAD
-        return response()->json($response,$status);
-=======
         return response()->json($response, $status);
->>>>>>> ee4e1684d12fd237df605ac25e7ae8c91777a5e1
     }
 }

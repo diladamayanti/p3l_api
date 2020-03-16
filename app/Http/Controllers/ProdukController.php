@@ -11,7 +11,7 @@ class ProdukController extends Controller
 {
     public function index()
     {
-        $produk = Produk::all('idProduk', 'namaProduk', 'harga', 'stok', 'jumlahMinimal', 'created_at', 'updated_at', 'deleted_at')->where('deleted_at', null);
+        $produk = Produk::all('idProduk', 'namaProduk', 'harga', 'stok', 'jumlahMinimal', 'created_at', 'updated_at', 'deleted_at', 'idPegawaiLog')->where('deleted_at', null);
         $response = [
             'status' => 'Success',
             'data' => $produk
@@ -62,7 +62,8 @@ class ProdukController extends Controller
         $produk->harga = $request['harga'];
         $produk->stok = $request['stok'];
         $produk->jumlahMinimal = $request['jumlahMinimal'];
-        // $produk->gambar = $this->upload();
+        $produk->idPegawaiLog = $request['idPegawaiLog'];
+        $produk->gambar = $this->upload();
         $produk->created_at = Carbon::now();
         $produk->updated_at = Carbon::now();
 
