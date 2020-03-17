@@ -11,47 +11,45 @@ class PengadaanController extends Controller
     public function index()
     {
         $pengadaan = Pengadaan::all('noPO', 'tglPengadaan', 'idSupplier', 'status', 'totalHarga', 'created_at', 'updated_at')
-        ->where('deleted_at',null);
+            ->where('deleted_at', null);
         $response = [
             'status' => 'Success',
             'data' => $pengadaan
         ];
-        return response()->json($response,200);
+        return response()->json($response, 200);
     }
 
     public function tampilSoftDelete()
     {
-        $pengadaan = Pengadaan::where('created_at',null);
+        $pengadaan = Pengadaan::where('created_at', null);
         $response = [
             'status' => 'Success',
             'data' => $pengadaan
         ];
 
-        return response()->json($response,200);
+        return response()->json($response, 200);
     }
 
     public function cariPengadaan($noPO)
     {
-        $pengadaan = Pengadaan::where('noPO','like','%'.$noPO.'%')
-        ->where('deleted_at',null)->get();
+        $pengadaan = Pengadaan::where('noPO', 'like', '%' . $noPO . '%')
+            ->where('deleted_at', null)->get();
 
-        if(sizeof($pengadaan)==0)
-        {
-            $status=404;
+        if (sizeof($pengadaan) == 0) {
+            $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-        }
-        else{
+        } else {
 
-            $status=200;
+            $status = 200;
             $response = [
                 'status' => 'Success',
                 'data' => $pengadaan
             ];
         }
-        return response()->json($response,$status);
+        return response()->json($response, $status);
     }
 
     public function tambah(Request $request)
@@ -65,15 +63,14 @@ class PengadaanController extends Controller
         $pengadaan->created_at = Carbon::now();
         $pengadaan->updated_at = Carbon::now();
 
-        try{
+        try {
             $success = $pengadaan->save();
             $status = 200;
             $response = [
                 'status' => 'Success',
                 'data' => $pengadaan
             ];
-        }
-        catch(\Illuminate\Database\QueryException $e){
+        } catch (\Illuminate\Database\QueryException $e) {
             $status = 500;
             $response = [
                 'status' => 'Error',
@@ -81,35 +78,33 @@ class PengadaanController extends Controller
                 'message' => $e
             ];
         }
-        return response()->json($response,$status);
+        return response()->json($response, $status);
     }
 
     public function edit(Request $request, $id)
     {
         $pengadaan = Pengadaan::find($id);
 
-        if($pengadaan==NULL){
-            $status=404;
+        if ($pengadaan == NULL) {
+            $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-        }
-        else{
+        } else {
             $pengadaan->totalHarga = $request['totalHarga'];
             $pengadaan->idSupplier = $request['idSupplier'];
             $pengadaan->status = $request['status'];
             $pengadaan->updated_at = Carbon::now();
 
-            try{
+            try {
                 $success = $pengadaan->save();
                 $status = 200;
                 $response = [
                     'status' => 'Success',
                     'data' => $pengadaan
                 ];
-            }
-            catch(\Illuminate\Database\QueryException $e){
+            } catch (\Illuminate\Database\QueryException $e) {
                 $status = 500;
                 $response = [
                     'status' => 'Error',
@@ -119,99 +114,90 @@ class PengadaanController extends Controller
             }
         }
 
-        return response()->json($response,$status);
+        return response()->json($response, $status);
     }
 
     public function hapus($id)
     {
         $pengadaan = Pengadaan::find($id);
 
-        if($pengadaan==NULL || $pengadaan->deleted_at != NULL){
-            $status=404;
+        if ($pengadaan == NULL || $pengadaan->deleted_at != NULL) {
+            $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-        }
-        else
-        {
+        } else {
             $pengadaan->created_at = NULL;
             $pengadaan->updated_at = NULL;
             $pengadaan->deleted_at = Carbon::now();
             $pengadaan->save();
-            $status=200;
+            $status = 200;
             $response = [
                 'status' => 'Success',
                 'data' => $pengadaan
             ];
         }
-        return response()->json($response,$status);
+        return response()->json($response, $status);
     }
 
     public function restore($id)
     {
         $pengadaan = Pengadaan::find($id);
 
-        if($pengadaan==NULL){
-            $status=404;
+        if ($pengadaan == NULL) {
+            $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-        }
-        else
-        {
+        } else {
             $pengadaan->created_at = Carbon::now();
             $pengadaan->updated_at = Carbon::now();
             $pengadaan->deleted_at = NULL;
             $pengadaan->save();
-            $status=200;
+            $status = 200;
             $response = [
                 'status' => 'Success',
                 'data' => $pengadaan
             ];
         }
-        return response()->json($response,$status);
+        return response()->json($response, $status);
     }
 
     public function hapusPermanen($id)
     {
         $pengadaan = Pengadaan::find($id);
 
-        if($pengadaan==NULL || $pengadaan->deleted_at != NULL){
-            $status=404;
+        if ($pengadaan == NULL || $pengadaan->deleted_at != NULL) {
+            $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
-        }
-        else
-        {
-            $layanan->delete();
-            $status=200;
+        } else {
+            $pengadaan->delete();
+            $status = 200;
             $response = [
                 'status' => 'Success',
                 'data' => $pengadaan
             ];
         }
-        return response()->json($response,$status);
+        return response()->json($response, $status);
     }
 
     public function generateNoPO()
     {
         $pengadaan = Pengadaan::whereDate('created_at', date('Y-m-d'))
-        ->orderBy('created_at', 'desc')->first();
+            ->orderBy('created_at', 'desc')->first();
 
-        if (isset($pengadaan))
-        {
-            $noTerakhir=substr($pengadaan->noPO,14);
-            if($noTerakhir<9)
+        if (isset($pengadaan)) {
+            $noTerakhir = substr($pengadaan->noPO, 14);
+            if ($noTerakhir < 9)
                 return 'PO-' . date('Y-m-d') . '-0' . ($noTerakhir + 1);
             else
                 return 'PO-' . date('Y-m-d') . '-' . ($noTerakhir + 1);
-        }
-        else
-        {
+        } else {
             return 'PO-' . date('Y-m-d') . '-01';
         }
     }

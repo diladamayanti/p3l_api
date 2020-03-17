@@ -10,8 +10,7 @@ class SupplierController extends Controller
 {
     public function index()
     {
-        $supplier = Supplier::all('idSupplier', 'namaSupplier', 'alamat', 'noHp', 'created_at', 'updated_at')
-            ->where('deleted_at', null);
+        $supplier = Supplier::all();
         $response = [
             'status' => 'Success',
             'data' => $supplier
@@ -21,7 +20,7 @@ class SupplierController extends Controller
 
     public function tampilSoftDelete()
     {
-        $supplier = Supplier::where('deleted_at', !null)->get();
+        $supplier = Supplier::onlyTrashed()->get();
         $response = [
             'status' => 'Success',
             'data' => $supplier

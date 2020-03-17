@@ -121,6 +121,7 @@ class ProdukController extends Controller
             $produk->updated_at = Carbon::now();
             $produk->idPegawaiLog = $request['idPegawaiLog'];
 
+
             if ($_FILES['gambar']['error'] != 4) {
                 $produk->gambar = $this->upload();
             }
@@ -270,7 +271,6 @@ class ProdukController extends Controller
 
     function upload()
     {
-
         $namaFile = $_FILES['gambar']['name'];
         $ukuranFile = $_FILES['gambar']['size'];
         $error = $_FILES['gambar']['error'];
