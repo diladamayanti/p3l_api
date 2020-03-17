@@ -16,4 +16,9 @@ class Customer extends Model
     {
         return $this->belongsTo('App\Pegawai');
     }
+
+    public function hewan()
+    {
+        return $this->hasMany('App\Hewan');
+    }
 }

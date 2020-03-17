@@ -12,4 +12,14 @@ class Hewan extends Model
     protected $table = 'hewan';
     protected $primaryKey = 'idHewan';
     public $incrementing = false;
+
+    public function customer()
+    {
+        return $this->belongsTo('App\Customer');
+    }
+
+    public function jenisHewan()
+    {
+        return $this->hasOne('App\JenisHewan');
+    }
 }

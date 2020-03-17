@@ -32,8 +32,7 @@ class PegawaiController extends Controller
 
     public function cariPegawai($cari)
     {
-        $pegawai = Pegawai::all('NIP', 'namaPegawai', 'alamat', 'tglLahir', 'noHp', 'jabatan', 'kataSandi', 'created_at', 'updated_at', 'deleted_at')
-            ->where('NIP', 'like', '%' . $cari . '%', 'or', 'namaPegawai', 'like', '%' . $cari . '%')
+        $pegawai = Pegawai::where('NIP', 'like', '%' . $cari . '%', 'or', 'namaPegawai', 'like', '%' . $cari . '%')
             ->where('deleted_at', null)->get();
 
         if (sizeof($pegawai) == 0) {

@@ -10,4 +10,9 @@ class DTLayanan extends Model
     protected $primaryKey = ['noTransaksi', 'idLayanan'];
     public $incrementing = false;
     public $timestamps = false;
+
+    public function layanan()
+    {
+        return $this->belongsTo('App\Layanan');
+    }
 }
