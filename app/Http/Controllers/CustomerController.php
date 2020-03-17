@@ -10,8 +10,7 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        $customer = Customer::all('idCustomer', 'namaCustomer', 'alamat', 'tglLahir', 'noHp', 'created_at', 'updated_at')
-            ->where('deleted_at', null);
+        $customer = Customer::where('deleted_at', null)->get();
         $response = [
             'status' => 'Success',
             'data' => $customer
