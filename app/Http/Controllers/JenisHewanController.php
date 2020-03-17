@@ -10,8 +10,7 @@ class JenisHewanController extends Controller
 {
     public function index()
     {
-        $jenisHewan = JenisHewan::all('idJenis', 'namaJenis', 'created_at', 'updated_at')
-        ->where('deleted_at',null);
+        $jenisHewan = JenisHewan::all('idJenis', 'namaJenis', 'created_at', 'updated_at', 'deleted_at', 'idPegawaiLog')->where('deleted_at', null);
         $response = [
             'status' => 'Success',
             'data' => $jenisHewan
@@ -63,8 +62,13 @@ class JenisHewanController extends Controller
             $success = $jenisHewan->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
-                'data' => $jenisHewan
+                'message' => 'Success',
+                'data' => [
+                    'idJenis' => $jenisHewan->getKey(),
+                    'namaJenis' => $jenisHewan->namaJenis,
+                    'created_at' => $jenisHewan->created_at,
+                    'updated_at' => $jenisHewan->updated_at,
+                ]
             ];
         } catch (\Illuminate\Database\QueryException $e) {
             $status = 500;

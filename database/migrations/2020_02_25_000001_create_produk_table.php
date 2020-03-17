@@ -24,6 +24,9 @@ class CreateProdukTable extends Migration
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
             $table->dateTime('deleted_at')->nullable();
+            $table->string('idPegawaiLog');
+
+            $table->foreign('idPegawaiLog')->references('NIP')->on('pegawai');
         });
     }
 

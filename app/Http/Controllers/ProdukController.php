@@ -80,7 +80,7 @@ class ProdukController extends Controller
                 $success = $produk->save();
                 $status = 200;
                 $response = [
-                    'status' => 'Success',
+                    'message' => 'Success',
                     'data' => [
                         'idProduk' => $produk->getKey(),
                         'namaProduk' => $produk->namaProduk,
@@ -110,7 +110,7 @@ class ProdukController extends Controller
         if ($produk == NULL) {
             $status = 404;
             $response = [
-                'status' => 'Data Not Found',
+                'message' => 'Data Not Found',
                 'data' => []
             ];
         } else {
@@ -129,7 +129,7 @@ class ProdukController extends Controller
                 $success = $produk->save();
                 $status = 200;
                 $response = [
-                    'status' => 'Success',
+                    'message' => 'Success',
                     'data' => [
                         'idProduk' => $produk->getKey(),
                         'namaProduk' => $produk->namaProduk,
@@ -170,7 +170,7 @@ class ProdukController extends Controller
             $produk->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => [
                     'idProduk' => $produk->getKey(),
                     'namaProduk' => $produk->namaProduk,
@@ -204,7 +204,7 @@ class ProdukController extends Controller
             $produk->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => [
                     'idProduk' => $produk->getKey(),
                     'namaProduk' => $produk->namaProduk,
@@ -234,7 +234,7 @@ class ProdukController extends Controller
             $produk->delete();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => [
                     'idProduk' => $produk->getKey(),
                     'namaProduk' => $produk->namaProduk,
