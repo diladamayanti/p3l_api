@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\JenisHewan;
 use App\UkuranHewan;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -21,7 +20,7 @@ class UkuranHewanController extends Controller
 
     public function tampilSoftDelete()
     {
-        $ukuranHewan = UkuranHewan::where('deleted_at', !null);
+        $ukuranHewan = UkuranHewan::onlyTrashed()->get();
         $response = [
             'status' => 'Success',
             'data' => $ukuranHewan

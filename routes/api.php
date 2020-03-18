@@ -24,7 +24,7 @@ Route::get('jenisHewan/softDelete', 'JenisHewanController@tampilSoftDelete');
 Route::get('jenisHewan/cariJenis/{cari}', 'JenisHewanController@cariJenis');
 Route::post('jenisHewan', 'JenisHewanController@tambah');
 Route::post('jenisHewan/{id}/restore', 'JenisHewanController@restore');
-Route::put('jenisHewan/{id}', 'JenisHewanController@edit');
+Route::post('jenisHewan/{id}', 'JenisHewanController@edit');
 Route::delete('jenisHewan/{id}', 'JenisHewanController@hapus');
 Route::delete('jenisHewan/{id}/permanen', 'JenisHewanController@hapusPermanen');
 
@@ -35,7 +35,7 @@ Route::get('ukuranHewan/softDelete', 'UkuranHewanController@tampilSoftDelete');
 Route::get('ukuranHewan/cariUkuran/{cari}', 'UkuranHewanController@cariUkuran');
 Route::post('ukuranHewan', 'UkuranHewanController@tambah');
 Route::post('ukuranHewan/{id}/restore', 'UkuranHewanController@restore');
-Route::put('ukuranHewan/{id}', 'UkuranHewanController@edit');
+Route::post('ukuranHewan/{id}', 'UkuranHewanController@edit');
 Route::delete('ukuranHewan/{id}', 'UkuranHewanController@hapus');
 Route::delete('ukuranHewan/{id}/permanen', 'UkuranHewanController@hapusPermanen');
 

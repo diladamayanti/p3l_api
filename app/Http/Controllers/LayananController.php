@@ -10,8 +10,7 @@ class LayananController extends Controller
 {
     public function index()
     {
-        $layanan = Layanan::all('idLayanan', 'namaLayanan', 'harga', 'idJenis', 'idUkuran', 'created_at', 'updated_at')
-            ->where('deleted_at', null);
+        $layanan = Layanan::where('deleted_at', null)->get();
         $response = [
             'status' => 'Success',
             'data' => $layanan
@@ -21,7 +20,7 @@ class LayananController extends Controller
 
     public function tampilSoftDelete()
     {
-        $layanan = Layanan::where('deleted_at', !null)->get();
+        $layanan = Layanan::onlyTrashed()->get();
         $response = [
             'status' => 'Success',
             'data' => $layanan

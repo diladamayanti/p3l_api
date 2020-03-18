@@ -10,7 +10,7 @@ class JenisHewanController extends Controller
 {
     public function index()
     {
-        $jenisHewan = JenisHewan::all('idJenis', 'namaJenis', 'created_at', 'updated_at', 'deleted_at', 'idPegawaiLog')->where('deleted_at', null);
+        $jenisHewan = JenisHewan::all();
         $response = [
             'status' => 'Success',
             'data' => $jenisHewan
@@ -20,7 +20,7 @@ class JenisHewanController extends Controller
 
     public function tampilSoftDelete()
     {
-        $jenisHewan = JenisHewan::where('deleted_at', !null)->get();
+        $jenisHewan = JenisHewan::onlyTrashed()->get();
         $response = [
             'status' => 'Success',
             'data' => $jenisHewan
@@ -53,6 +53,7 @@ class JenisHewanController extends Controller
     public function tambah(Request $request)
     {
         $jenisHewan = new JenisHewan;
+
         $jenisHewan->namaJenis = $request['namaJenis'];
         $jenisHewan->created_at = Carbon::now();
         $jenisHewan->updated_at = Carbon::now();
@@ -84,6 +85,7 @@ class JenisHewanController extends Controller
     public function edit(Request $request, $id)
     {
         $jenisHewan = JenisHewan::find($id);
+
         if ($jenisHewan == NULL) {
             $status = 404;
             $response = [
@@ -99,8 +101,13 @@ class JenisHewanController extends Controller
                 $success = $jenisHewan->save();
                 $status = 200;
                 $response = [
-                    'status' => 'Success',
-                    'data' => $jenisHewan
+                    'Message' => 'Success',
+                    'data' => [
+                        'idJenis' => $jenisHewan->getKey(),
+                        'namaJenis' => $jenisHewan->namaJenis,
+                        'created_at' => $jenisHewan->created_at,
+                        'updated_at' => $jenisHewan->updated_at,
+                    ]
                 ];
             } catch (\Illuminate\Database\QueryException $e) {
                 $status = 500;

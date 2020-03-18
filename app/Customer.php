@@ -3,14 +3,22 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Customer extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'customer';
     protected $primaryKey = 'idCustomer';
 
     public function pegawai()
     {
         return $this->belongsTo('App\Pegawai');
+    }
+
+    public function hewan()
+    {
+        return $this->hasMany('App\Hewan');
     }
 }

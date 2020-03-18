@@ -20,7 +20,7 @@ class CustomerController extends Controller
 
     public function tampilSoftDelete()
     {
-        $customer = Customer::where('deleted_at', !null)->get();
+        $customer = Customer::onlyTrashed()->get();
         $response = [
             'status' => 'Success',
             'data' => $customer

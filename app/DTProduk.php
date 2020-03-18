@@ -10,4 +10,9 @@ class DTProduk extends Model
     protected $primaryKey = ['noTransaksi', 'idProduk'];
     public $incrementing = false;
     public $timestamps = false;
+
+    public function produk()
+    {
+        return $this->belongsTo('App\Produk');
+    }
 }
