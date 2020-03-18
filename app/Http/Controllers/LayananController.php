@@ -10,7 +10,7 @@ class LayananController extends Controller
 {
     public function index()
     {
-        $layanan = Layanan::all();
+        $layanan = Layanan::where('deleted_at', null)->get();
         $response = [
             'status' => 'Success',
             'data' => $layanan
