@@ -45,7 +45,7 @@ Route::get('layanan/softDelete', 'LayananController@tampilSoftDelete');
 Route::get('layanan/cariLayanan/{cari}', 'LayananController@cariLayanan');
 Route::post('layanan', 'LayananController@tambah');
 Route::post('layanan/{id}/restore', 'LayananController@restore');
-Route::put('layanan/{id}', 'LayananController@edit');
+Route::post('layanan/{id}', 'LayananController@edit');
 Route::delete('layanan/{id}', 'LayananController@hapus');
 Route::delete('layanan/{id}/permanen', 'LayananController@hapusPermanen');
 
@@ -67,7 +67,7 @@ Route::get('customer/softDelete', 'CustomerController@tampilSoftDelete');
 Route::get('customer/cariCustomer/{cari}', 'CustomerController@cariCustomer');
 Route::post('customer', 'CustomerController@tambah');
 Route::post('customer/{id}/restore', 'CustomerController@restore');
-Route::put('customer/{id}', 'CustomerController@edit');
+Route::post('customer/{id}', 'CustomerController@edit');
 Route::delete('customer/{id}', 'CustomerController@hapus');
 Route::delete('customer/{id}/permanen', 'CustomerController@hapusPermanen');
 
@@ -77,7 +77,7 @@ Route::get('hewan/softDelete', 'HewanController@tampilSoftDelete');
 Route::get('hewan/cariHewan/{cari}', 'HewanController@cariHewan');
 Route::post('hewan', 'HewanController@tambah');
 Route::post('hewan/{id}/restore', 'HewanController@restore');
-Route::put('hewan/{id}', 'HewanController@edit');
+Route::post('hewan/{id}', 'HewanController@edit');
 Route::delete('hewan/{id}', 'HewanController@hapus');
 Route::delete('hewan/{id}/permanen', 'HewanController@hapusPermanen');
 
@@ -87,7 +87,7 @@ Route::get('supplier/softDelete', 'SupplierController@tampilSoftDelete');
 Route::get('supplier/cariSupplier/{cari}', 'SupplierController@cariSupplier');
 Route::post('supplier', 'SupplierController@tambah');
 Route::post('supplier/{id}/restore', 'SupplierController@restore');
-Route::put('supplier/{id}', 'SupplierController@edit');
+Route::post('supplier/{id}', 'SupplierController@edit');
 Route::delete('supplier/{id}', 'SupplierController@hapus');
 Route::delete('supplier/{id}/permanen', 'SupplierController@hapusPermanen');
 
@@ -95,40 +95,40 @@ Route::delete('supplier/{id}/permanen', 'SupplierController@hapusPermanen');
 Route::get('transaksiPengadaan', 'TransaksiPengadaanController@index');
 Route::get('transaksiPengadaan/cariPengadaan/{cari}', 'TransaksiPengadaanController@cariPengadaan');
 Route::post('transaksiPengadaan', 'TransaksiPengadaanController@tambah');
-Route::put('transaksiPengadaan/{id}', 'TransaksiPengadaanController@edit');
+Route::post('transaksiPengadaan/{id}', 'TransaksiPengadaanController@edit');
 Route::delete('transaksiPengadaan/{id}', 'TransaksiPengadaanController@hapus');
 
 //TransaksiProduk
 Route::get('transaksiProduk', 'TransaksiProdukController@index');
 Route::get('transaksiProduk/cariTransaksiProduk/{cari}', 'TransaksiProdukController@cariTransaksiProduk');
 Route::post('transaksiProduk', 'TransaksiProdukController@tambah');
-Route::put('transaksiProduk/{id}', 'TransaksiProdukController@edit');
+Route::post('transaksiProduk/{id}', 'TransaksiProdukController@edit');
 Route::delete('transaksiProduk/{id}', 'TransaksiProdukController@hapus');
 
 //TransaksiLayanan
 Route::get('transaksiLayanan', 'TransaksiLayananController@index');
 Route::get('transaksiLayanan/cariTransaksiLayanan/{cari}', 'TransaksiLayananController@cariTransaksiLayanan');
 Route::post('transaksiLayanan', 'TransaksiLayananController@tambah');
-Route::put('transaksiLayanan/{id}', 'TransaksiLayananController@edit');
+Route::post('transaksiLayanan/{id}', 'TransaksiLayananController@edit');
 Route::delete('transaksiLayanan/{id}', 'TransaksiLayananController@hapus');
 
 //Detail Transaksi Layanan
 Route::get('dtLayanan', 'DTLayananController@index');
 Route::get('dtLayanan/cariDTLayanan/{noTransaksi}', 'DTLayananController@cariDTLayanan');
 Route::post('dtLayanan', 'DTLayananController@tambah');
-Route::put('dtLayanan/{id}', 'DTLayananController@edit');
+Route::post('dtLayanan/{id}', 'DTLayananController@edit');
 Route::delete('dtLayanan/{id}', 'DTLayananController@hapus');
 
 //Detail Transaksi Pengadaan
 Route::get('dtPengadaan', 'DTPengadaanController@index');
 Route::get('dtPengadaan/cariDTPengadaan/{noPO}', 'DTPengadaanController@cariDTPengadaan');
 Route::post('dtPengadaan', 'DTPengadaanController@tambah');
-Route::put('dtPengadaan/{id}', 'DTPengadaanController@edit');
+Route::post('dtPengadaan/{id}', 'DTPengadaanController@edit');
 Route::delete('dtPengadaan/{id}', 'DTPengadaanController@hapus');
 
 //Detail Transaksi Produk
 Route::get('dtProduk', 'DTProdukController@index');
 Route::get('dtProduk/cariDTProduk/{noTransaksi}', 'DTProdukController@cariDTProduk');
 Route::post('dtProduk', 'DTProdukController@tambah');
-Route::put('dtProduk/{id}', 'DTProdukController@edit');
+Route::post('dtProduk/{id}', 'DTProdukController@edit');
 Route::delete('dtProduk/{id}', 'DTProdukController@hapus');
