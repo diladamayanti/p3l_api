@@ -45,7 +45,7 @@ Route::get('layanan/softDelete', 'LayananController@tampilSoftDelete');
 Route::get('layanan/cariLayanan/{cari}', 'LayananController@cariLayanan');
 Route::post('layanan', 'LayananController@tambah');
 Route::post('layanan/{id}/restore', 'LayananController@restore');
-Route::put('layanan/{id}', 'LayananController@edit');
+Route::post('layanan/{id}', 'LayananController@edit');
 Route::delete('layanan/{id}', 'LayananController@hapus');
 Route::delete('layanan/{id}/permanen', 'LayananController@hapusPermanen');
 
@@ -67,7 +67,7 @@ Route::get('customer/softDelete', 'CustomerController@tampilSoftDelete');
 Route::get('customer/cariCustomer/{cari}', 'CustomerController@cariCustomer');
 Route::post('customer', 'CustomerController@tambah');
 Route::post('customer/{id}/restore', 'CustomerController@restore');
-Route::put('customer/{id}', 'CustomerController@edit');
+Route::post('customer/{id}', 'CustomerController@edit');
 Route::delete('customer/{id}', 'CustomerController@hapus');
 Route::delete('customer/{id}/permanen', 'CustomerController@hapusPermanen');
 
