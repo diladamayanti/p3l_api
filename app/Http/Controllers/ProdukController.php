@@ -11,7 +11,7 @@ class ProdukController extends Controller
 {
     public function index()
     {
-        $produk = Produk::all('idProduk', 'namaProduk', 'harga', 'stok', 'jumlahMinimal', 'created_at', 'updated_at', 'deleted_at', 'idPegawaiLog')->where('deleted_at', null);
+        $produk = Produk::all();
         $response = [
             'status' => 'Success',
             'data' => $produk
@@ -21,8 +21,7 @@ class ProdukController extends Controller
 
     public function tampilSoftDelete()
     {
-        $produk = Produk::all('idProduk', 'namaProduk', 'harga', 'stok', 'jumlahMinimal', 'created_at', 'updated_at', 'deleted_at')
-            ->where('deleted_at', !null);
+        $produk = Produk::onlyTrashed()->get();
         $response = [
             'status' => 'Success',
             'data' => $produk
