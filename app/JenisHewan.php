@@ -12,4 +12,9 @@ class JenisHewan extends Model
     protected $table = 'jenishewan';
     protected $primaryKey = 'idJenis';
     public $incrementing = false;
+
+    public function pegawai()
+    {
+        return $this->hasOne(Pegawai::class, 'idPegawaiLog');
+    }
 }

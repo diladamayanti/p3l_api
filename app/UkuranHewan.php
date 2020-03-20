@@ -12,4 +12,9 @@ class UkuranHewan extends Model
     protected $table = 'ukuranHewan';
     protected $primaryKey = 'idUkuran';
     public $incrementing = false;
+
+    public function pegawai()
+    {
+        return $this->hasOne(Pegawai::class, 'idPegawaiLog');
+    }
 }

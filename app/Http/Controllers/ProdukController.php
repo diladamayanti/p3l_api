@@ -6,12 +6,14 @@ use App\Produk;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use finfo;
+use Illuminate\Support\Facades\DB;
 
 class ProdukController extends Controller
 {
     public function index()
     {
-        $produk = Produk::all();
+        $produk = Produk::all('idProduk', 'namaProduk', 'harga', 'stok', 'jumlahMinimal', 'created_at', 'updated_at', 'deleted_at', 'idPegawaiLog')
+            ->where('deleted_at', null);
         $response = [
             'status' => 'Success',
             'data' => $produk
@@ -119,6 +121,7 @@ class ProdukController extends Controller
             $produk->jumlahMinimal = $request['jumlahMinimal'];
             $produk->updated_at = Carbon::now();
             $produk->idPegawaiLog = $request['idPegawaiLog'];
+            $produk->gambar = $request['gambar'];
 
 
             if ($_FILES['gambar']['error'] != 4) {
@@ -165,7 +168,7 @@ class ProdukController extends Controller
             ];
         } else {
             $produk->deleted_at = Carbon::now();
-            $produk->idPegawaiLog = $request['idPegawaiLog'];
+            //$produk->idPegawaiLog = $request['idPegawaiLog'];
 
             $produk->save();
             $status = 200;
@@ -180,6 +183,7 @@ class ProdukController extends Controller
                     'created_at' => $produk->created_at,
                     'updated_at' => $produk->updated_at,
                     'deleted_at' => $produk->deleted_at,
+                    'idPegawaiLog' => $produk->idPegawaiLog
                 ]
             ];
         }

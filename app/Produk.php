@@ -12,4 +12,9 @@ class Produk extends Model
     protected $table = 'produk';
     protected $primaryKey = 'idProduk';
     public $incrementing = false;
+
+    public function pegawai()
+    {
+        return $this->hasOne(Pegawai::class, 'idPegawaiLog');
+    }
 }

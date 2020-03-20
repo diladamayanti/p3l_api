@@ -14,11 +14,6 @@ class Customer extends Model
 
     public function pegawai()
     {
-        return $this->belongsTo('App\Pegawai');
-    }
-
-    public function hewan()
-    {
-        return $this->hasMany('App\Hewan');
+        return $this->belongsTo(Pegawai::class, 'idPegawaiLog');
     }
 }

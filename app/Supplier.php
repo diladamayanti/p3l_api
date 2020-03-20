@@ -12,4 +12,9 @@ class Supplier extends Model
     protected $table = 'supplier';
     protected $primaryKey = 'idSupplier';
     public $incrementing = false;
+
+    public function pegawai()
+    {
+        return $this->hasOne(Pegawai::class, 'idPegawaiLog');
+    }
 }

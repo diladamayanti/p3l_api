@@ -132,3 +132,8 @@ Route::get('dtProduk/cariDTProduk/{noTransaksi}', 'DTProdukController@cariDTProd
 Route::post('dtProduk', 'DTProdukController@tambah');
 Route::post('dtProduk/{id}', 'DTProdukController@edit');
 Route::delete('dtProduk/{id}', 'DTProdukController@hapus');
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

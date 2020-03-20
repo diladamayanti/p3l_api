@@ -15,11 +15,16 @@ class Hewan extends Model
 
     public function customer()
     {
-        return $this->belongsTo('App\Customer');
+        return $this->belongsTo('App\Customer', 'idCustomer');
     }
 
     public function jenisHewan()
     {
-        return $this->hasOne('App\JenisHewan');
+        return $this->hasOne('App\JenisHewan', 'idJenis');
+    }
+
+    public function pegawai()
+    {
+        return $this->hasOne(Pegawai::class, 'idPegawaiLog');
     }
 }
