@@ -57,7 +57,7 @@ Route::get('pegawai/cariPegawai/{cari}', 'PegawaiController@cariPegawai');
 Route::post('pegawai/login', 'PegawaiController@login');
 Route::post('pegawai', 'PegawaiController@tambah');
 Route::post('pegawai/{NIP}/restore', 'PegawaiController@restore');
-Route::post('pegawai/update/{NIP}', 'PegawaiController@edit');
+Route::post('pegawai/{NIP}', 'PegawaiController@edit');
 Route::delete('pegawai/{NIP}', 'PegawaiController@hapus');
 Route::delete('pegawai/{NIP}/permanen', 'PegawaiController@hapusPermanen');
 
