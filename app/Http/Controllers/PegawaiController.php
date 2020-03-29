@@ -12,6 +12,7 @@ class PegawaiController extends Controller
 {
     public function index()
     {
+        //$pegawai = Pegawai::where('deleted_at', null)->get();
         $pegawai = Pegawai::all('NIP', 'namaPegawai', 'alamat', 'tglLahir', 'noHp', 'jabatan', 'idPegawaiLog')->where('deleted_at', null);
         $response = [
             'status' => 'Success',
