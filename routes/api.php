@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+// use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -134,6 +136,12 @@ Route::post('dtProduk/{id}', 'DTProdukController@edit');
 Route::delete('dtProduk/{id}', 'DTProdukController@hapus');
 
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
+
+//Admin
+//Route::prefix('auth')->group(function () {
+
+// Route::post('logout', 'PegawaiController@logout');
+//});

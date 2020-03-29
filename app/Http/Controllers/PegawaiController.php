@@ -6,6 +6,7 @@ use App\Pegawai;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use finfo;
+use Illuminate\Support\Facades\Auth;
 
 class PegawaiController extends Controller
 {
@@ -281,7 +282,7 @@ class PegawaiController extends Controller
             if ($pegawai->kataSandi == md5($request->kataSandi)) {
                 $status = 200;
                 $response = [
-                    'status' => 'Success',
+                    'message' => 'Success',
                     'data' => [
                         'NIP' => $pegawai->getKey(),
                         'namaPegawai' => $pegawai->namaPegawai,
@@ -464,5 +465,38 @@ class PegawaiController extends Controller
             }
         }
         return response()->json($response, $status);
+    }
+
+    // public function login(Request $request)
+    // {
+    //     $credentials = $request->only('NIP', 'kataSandi');
+    //     if ($token = $this->guard()->attempt($credentials)) {
+    //         return response()->json(['status' => 'success'], 200)->header('Authorization', $token);
+    //     }
+    //     return response()->json(['error' => 'login_error'], 401);
+    // }
+
+
+    public function logout()
+    {
+        $this->guard()->logout();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Logged out Successfully.'
+        ], 200);
+    }
+
+    public function admin(Request $request)
+    {
+        $admin = Pegawai::find(Auth::admin()->id);
+        return response()->json([
+            'status' => 'success',
+            'data' => $admin
+        ]);
+    }
+
+    private function guard()
+    {
+        return Auth::guard();
     }
 }
