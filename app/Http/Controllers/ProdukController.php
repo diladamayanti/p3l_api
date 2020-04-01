@@ -6,7 +6,7 @@ use App\Produk;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use finfo;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProdukController extends Controller
 {
@@ -23,10 +23,12 @@ class ProdukController extends Controller
 
     public function tampilSoftDelete()
     {
-        $produk = Produk::onlyTrashed()->get();
+        $produk = Produk::select('idProduk', 'namaProduk', 'harga', 'stok', 'jumlahMinimal', 'created_at', 'updated_at', 'deleted_at', 'idPegawaiLog')
+            ->whereNotNull('deleted_at')
+            ->get();
         $response = [
             'status' => 'Success',
-            'data' => $produk
+            'dataProduk' => $produk,
         ];
 
         return response()->json($response, 200);

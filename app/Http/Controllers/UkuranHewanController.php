@@ -132,10 +132,10 @@ class UkuranHewanController extends Controller
         return response()->json($response, $status);
     }
 
-    public function restore(Request $request, $id)
+    public function restore(Request $request, $idUkuran)
     {
-        $ukuranHewan = UkuranHewan::find($id);
-
+        $idUkuran = 5;
+        $ukuranHewan = UkuranHewan::find($idUkuran);
         if ($ukuranHewan == NULL) {
             $status = 404;
             $response = [

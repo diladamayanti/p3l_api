@@ -53,6 +53,7 @@ Route::delete('layanan/{id}/permanen', 'LayananController@hapusPermanen');
 
 //Pegawai
 Route::get('pegawai', 'PegawaiController@index');
+Route::get('pegawai/{NIP}', 'PegawaiController@tampil');
 Route::get('pegawai/{NIP}/gambar', 'PegawaiController@tampilGambar');
 Route::get('pegawai/softDelete', 'PegawaiController@tampilSoftDelete');
 Route::get('pegawai/cariPegawai/{cari}', 'PegawaiController@cariPegawai');
