@@ -134,7 +134,6 @@ class UkuranHewanController extends Controller
 
     public function restore(Request $request, $idUkuran)
     {
-        $idUkuran = 5;
         $ukuranHewan = UkuranHewan::find($idUkuran);
         if ($ukuranHewan == NULL) {
             $status = 404;
@@ -161,7 +160,7 @@ class UkuranHewanController extends Controller
     {
         $ukuranHewan = UkuranHewan::find($id);
 
-        if ($ukuranHewan == NULL || $ukuranHewan->deleted_at != NULL) {
+        if ($ukuranHewan == NULL || $ukuranHewan->deleted_at == NULL) {
             $status = 404;
             $response = [
                 'status' => 'Data Not Found',
