@@ -101,7 +101,7 @@ class JenisHewanController extends Controller
                 $success = $jenisHewan->save();
                 $status = 200;
                 $response = [
-                    'Message' => 'Success',
+                    'message' => 'Success',
                     'data' => [
                         'idJenis' => $jenisHewan->getKey(),
                         'namaJenis' => $jenisHewan->namaJenis,
@@ -137,7 +137,7 @@ class JenisHewanController extends Controller
             $jenisHewan->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $jenisHewan
             ];
         }
@@ -146,7 +146,7 @@ class JenisHewanController extends Controller
 
     public function restore(Request $request, $id)
     {
-        $jenisHewan = JenisHewan::find($id);
+        $jenisHewan = JenisHewan::onlyTrashed()->find($id);
 
         if ($jenisHewan == NULL) {
             $status = 404;
@@ -162,7 +162,7 @@ class JenisHewanController extends Controller
             $jenisHewan->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $jenisHewan
             ];
         }
@@ -171,19 +171,19 @@ class JenisHewanController extends Controller
 
     public function hapusPermanen($id)
     {
-        $jenisHewan = JenisHewan::find($id);
+        $jenisHewan = JenisHewan::onlyTrashed()->find($id);
 
-        if ($jenisHewan == NULL || $jenisHewan->deleted_at != NULL) {
+        if ($jenisHewan == NULL) {
             $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
         } else {
-            $jenisHewan->delete();
+            $jenisHewan->forceDelete();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $jenisHewan
             ];
         }

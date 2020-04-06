@@ -67,7 +67,7 @@ class LayananController extends Controller
             $success = $layanan->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $layanan
             ];
         } catch (\Illuminate\Database\QueryException $e) {
@@ -103,7 +103,7 @@ class LayananController extends Controller
                 $success = $layanan->save();
                 $status = 200;
                 $response = [
-                    'status' => 'Success',
+                    'message' => 'Success',
                     'data' => $layanan
                 ];
             } catch (\Illuminate\Database\QueryException $e) {
@@ -134,7 +134,7 @@ class LayananController extends Controller
             $layanan->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $layanan
             ];
         }
@@ -143,7 +143,7 @@ class LayananController extends Controller
 
     public function restore(Request $request, $id)
     {
-        $layanan = Layanan::find($id);
+        $layanan = Layanan::onlyTrashed()->find($id);
 
         if ($layanan == NULL) {
             $status = 404;
@@ -159,7 +159,7 @@ class LayananController extends Controller
             $layanan->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $layanan
             ];
         }
@@ -168,9 +168,9 @@ class LayananController extends Controller
 
     public function hapusPermanen($id)
     {
-        $layanan = Layanan::find($id);
+        $layanan = Layanan::onlyTrashed()->find($id);
 
-        if ($layanan == NULL || $layanan->deleted_at != NULL) {
+        if ($layanan == NULL) {
             $status = 404;
             $response = [
                 'status' => 'Data Not Found',

@@ -62,7 +62,7 @@ class UkuranHewanController extends Controller
             $success = $ukuranHewan->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $ukuranHewan
             ];
         } catch (\Illuminate\Database\QueryException $e) {
@@ -95,7 +95,7 @@ class UkuranHewanController extends Controller
                 $success = $ukuranHewan->save();
                 $status = 200;
                 $response = [
-                    'status' => 'Success',
+                    'message' => 'Success',
                     'data' => $ukuranHewan
                 ];
             } catch (\Illuminate\Database\QueryException $e) {
@@ -114,7 +114,7 @@ class UkuranHewanController extends Controller
     {
         $ukuranHewan = UkuranHewan::find($id);
 
-        if ($ukuranHewan == NULL || $ukuranHewan->deleted_at != NULL) {
+        if ($ukuranHewan == NULL) {
             $status = 404;
             $response = [
                 'status' => 'Data Not Found',
@@ -125,7 +125,7 @@ class UkuranHewanController extends Controller
             $ukuranHewan->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $ukuranHewan
             ];
         }
@@ -134,7 +134,7 @@ class UkuranHewanController extends Controller
 
     public function restore(Request $request, $idUkuran)
     {
-        $ukuranHewan = UkuranHewan::find($idUkuran);
+        $ukuranHewan = UkuranHewan::onlyTrashed()->find($idUkuran);
         if ($ukuranHewan == NULL) {
             $status = 404;
             $response = [
@@ -149,7 +149,7 @@ class UkuranHewanController extends Controller
             $ukuranHewan->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $ukuranHewan
             ];
         }
@@ -158,7 +158,7 @@ class UkuranHewanController extends Controller
 
     public function hapusPermanen($id)
     {
-        $ukuranHewan = UkuranHewan::find($id);
+        $ukuranHewan = UkuranHewan::onlyTrashed()->find($id);
 
         if ($ukuranHewan == NULL || $ukuranHewan->deleted_at == NULL) {
             $status = 404;
@@ -167,10 +167,10 @@ class UkuranHewanController extends Controller
                 'data' => []
             ];
         } else {
-            $ukuranHewan->delete();
+            $ukuranHewan->forceDelete();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $ukuranHewan
             ];
         }

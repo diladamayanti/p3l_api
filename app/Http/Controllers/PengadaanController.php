@@ -67,7 +67,7 @@ class PengadaanController extends Controller
             $success = $pengadaan->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $pengadaan
             ];
         } catch (\Illuminate\Database\QueryException $e) {
@@ -101,7 +101,7 @@ class PengadaanController extends Controller
                 $success = $pengadaan->save();
                 $status = 200;
                 $response = [
-                    'status' => 'Success',
+                    'message' => 'Success',
                     'data' => $pengadaan
                 ];
             } catch (\Illuminate\Database\QueryException $e) {
@@ -134,7 +134,7 @@ class PengadaanController extends Controller
             $pengadaan->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $pengadaan
             ];
         }
@@ -143,7 +143,7 @@ class PengadaanController extends Controller
 
     public function restore($id)
     {
-        $pengadaan = Pengadaan::find($id);
+        $pengadaan = Pengadaan::onlyTrashed()->find($id);
 
         if ($pengadaan == NULL) {
             $status = 404;
@@ -158,7 +158,7 @@ class PengadaanController extends Controller
             $pengadaan->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $pengadaan
             ];
         }
@@ -167,9 +167,9 @@ class PengadaanController extends Controller
 
     public function hapusPermanen($id)
     {
-        $pengadaan = Pengadaan::find($id);
+        $pengadaan = Pengadaan::onlyTrashed()->find($id);
 
-        if ($pengadaan == NULL || $pengadaan->deleted_at != NULL) {
+        if ($pengadaan == NULL) {
             $status = 404;
             $response = [
                 'status' => 'Data Not Found',
@@ -179,7 +179,7 @@ class PengadaanController extends Controller
             $pengadaan->delete();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $pengadaan
             ];
         }

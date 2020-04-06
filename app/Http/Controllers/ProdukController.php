@@ -6,17 +6,17 @@ use App\Produk;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use finfo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProdukController extends Controller
 {
     public function index()
     {
-        $produk = Produk::all('idProduk', 'namaProduk', 'harga', 'stok', 'jumlahMinimal', 'created_at', 'updated_at', 'deleted_at', 'idPegawaiLog')
-            ->where('deleted_at', null);
+        $produk = Produk::select('idProduk', 'namaProduk', 'harga', 'stok', 'jumlahMinimal', 'created_at', 'updated_at', 'deleted_at', 'idPegawaiLog')
+            ->whereNull('deleted_at')
+            ->get();
         $response = [
             'status' => 'Success',
-            'data' => $produk
+            'produk' => $produk,
         ];
         return response()->json($response, 200);
     }
@@ -28,7 +28,7 @@ class ProdukController extends Controller
             ->get();
         $response = [
             'status' => 'Success',
-            'dataProduk' => $produk,
+            'produk' => $produk,
         ];
 
         return response()->json($response, 200);
@@ -36,22 +36,25 @@ class ProdukController extends Controller
 
     public function cariProduk($cari)
     {
-        $produk = Produk::select('idProduk', 'namaProduk', 'harga', 'stok', 'jumlahMinimal', 'created_at', 'updated_at', 'deleted_at')
-            ->where('idProduk', 'like', '%' . $cari . '%', 'or', 'namaProduk', 'like', '%' . $cari . '%')
-            ->where('deleted_at', null)->get();
+        $produk = Produk::select('idProduk', 'namaProduk', 'harga', 'stok', 'jumlahMinimal', 'created_at', 'updated_at', 'deleted_at', 'idPegawaiLog')
+            ->where('idProduk', 'like', '%' . $cari . '%')
+            ->orWhere('namaProduk', 'like', '%' . $cari . '%')
+            ->whereNull('deleted_at')
+            ->get();
 
         if (sizeof($produk) == 0) {
             $status = 404;
             $response = [
-                'status' => 'Data Not Found',
-                'data' => []
+                'status' => 'Error',
+                'produk' => [],
+                'message' => 'Produk Tidak Ditemukan'
             ];
         } else {
 
             $status = 200;
             $response = [
                 'status' => 'Success',
-                'data' => $produk
+                'produk' => $produk
             ];
         }
         return response()->json($response, $status);
@@ -65,16 +68,15 @@ class ProdukController extends Controller
         $produk->harga = $request['harga'];
         $produk->stok = $request['stok'];
         $produk->jumlahMinimal = $request['jumlahMinimal'];
-        $produk->idPegawaiLog = $request['idPegawaiLog'];
         $produk->gambar = $this->upload();
         $produk->created_at = Carbon::now();
-        $produk->updated_at = Carbon::now();
+        $produk->idPegawaiLog = $request['idPegawaiLog'];
 
         if ($produk->gambar == 1) {
-            $status = 500;
+            $status = 200;
             $response = [
                 'status' => 'Error',
-                'data' => [],
+                'produk' => [],
                 'message' =>  "Gambar harus memiliki format jpg or jpeg or png or gif..."
             ];
         } else {
@@ -83,22 +85,15 @@ class ProdukController extends Controller
                 $success = $produk->save();
                 $status = 200;
                 $response = [
-                    'message' => 'Success',
-                    'data' => [
-                        'idProduk' => $produk->getKey(),
-                        'namaProduk' => $produk->namaProduk,
-                        'harga' => $produk->harga,
-                        'stok' => $produk->stok,
-                        'jumlahMinimal' => $produk->jumlahMinimal,
-                        'created_at' => $produk->created_at,
-                        'updated_at' => $produk->updated_at,
-                    ]
+                    'status' => 'Success',
+                    'produk' => [$this->toJson($produk)],
+                    'message' => 'Tambah data produk berhasil.'
                 ];
             } catch (\Illuminate\Database\QueryException $e) {
                 $status = 500;
                 $response = [
                     'status' => 'Error',
-                    'data' => [],
+                    'produk' => [],
                     'message' => $e
                 ];
             }
@@ -113,8 +108,9 @@ class ProdukController extends Controller
         if ($produk == NULL) {
             $status = 404;
             $response = [
-                'message' => 'Data Not Found',
-                'data' => []
+                'status' => 'Error',
+                'produk' => [],
+                'message' => 'Produk Tidak Ditemukan'
             ];
         } else {
             $produk->namaProduk = $request['namaProduk'];
@@ -123,84 +119,76 @@ class ProdukController extends Controller
             $produk->jumlahMinimal = $request['jumlahMinimal'];
             $produk->updated_at = Carbon::now();
             $produk->idPegawaiLog = $request['idPegawaiLog'];
-            $produk->gambar = $request['gambar'];
-
 
             if ($_FILES['gambar']['error'] != 4) {
                 $produk->gambar = $this->upload();
             }
 
-            try {
-                $success = $produk->save();
+            if ($produk->gambar == 1) {
                 $status = 200;
                 $response = [
-                    'message' => 'Success',
-                    'data' => [
-                        'idProduk' => $produk->getKey(),
-                        'namaProduk' => $produk->namaProduk,
-                        'harga' => $produk->harga,
-                        'stok' => $produk->stok,
-                        'jumlahMinimal' => $produk->jumlahMinimal,
-                        'created_at' => $produk->created_at,
-                        'updated_at' => $produk->updated_at,
-                        'deleted_at' => $produk->deleted_at,
-                    ]
-                ];
-            } catch (\Illuminate\Database\QueryException $e) {
-                $status = 500;
-                $response = [
                     'status' => 'Error',
-                    'data' => [],
-                    'message' => $e
+                    'produk' => [],
+                    'message' =>  "Gambar harus memiliki format jpg or jpeg or png or gif..."
                 ];
+            } else {
+                try {
+                    $success = $produk->save();
+                    $status = 200;
+                    $response = [
+                        'status' => 'Success',
+                        'produk' => [$this->toJson($produk)],
+                        'message' => 'Ubah data produk berhasil.'
+                    ];
+                } catch (\Illuminate\Database\QueryException $e) {
+                    $status = 500;
+                    $response = [
+                        'status' => 'Error',
+                        'dataProduk' => [],
+                        'message' => $e
+                    ];
+                }
             }
         }
         return response()->json($response, $status);
     }
 
-    public function hapus(Request $request, $id)
+    public function hapus($id, Request $request)
     {
         $produk = Produk::find($id);
 
         if ($produk == NULL || $produk->deleted_at != NULL) {
             $status = 404;
             $response = [
-                'status' => 'Data Not Found',
-                'data' => []
+                'status' => 'Error',
+                'produk' => [],
+                'message' => 'Produk Tidak Ditemukan'
             ];
         } else {
             $produk->deleted_at = Carbon::now();
-            //$produk->idPegawaiLog = $request['idPegawaiLog'];
+            // $produk->idPegawaiLog = $request['idPegawaiLog'];
 
             $produk->save();
             $status = 200;
             $response = [
-                'message' => 'Success',
-                'data' => [
-                    'idProduk' => $produk->getKey(),
-                    'namaProduk' => $produk->namaProduk,
-                    'harga' => $produk->harga,
-                    'stok' => $produk->stok,
-                    'jumlahMinimal' => $produk->jumlahMinimal,
-                    'created_at' => $produk->created_at,
-                    'updated_at' => $produk->updated_at,
-                    'deleted_at' => $produk->deleted_at,
-                    'idPegawaiLog' => $produk->idPegawaiLog
-                ]
+                'status' => 'Success',
+                'produk' => [$this->toJson($produk)],
+                'message' => 'Hapus data produk berhasil.'
             ];
         }
         return response()->json($response, $status);
     }
 
-    public function restore(Request $request, $id)
+    public function restore($id, Request $request)
     {
         $produk = Produk::find($id);
 
         if ($produk == NULL) {
             $status = 404;
             $response = [
-                'status' => 'Data Not Found',
-                'data' => []
+                'status' => 'Error',
+                'produk' => [],
+                'message' => 'Produk Tidak Ditemukan'
             ];
         } else {
             $produk->updated_at = Carbon::now();
@@ -210,17 +198,9 @@ class ProdukController extends Controller
             $produk->save();
             $status = 200;
             $response = [
-                'message' => 'Success',
-                'data' => [
-                    'idProduk' => $produk->getKey(),
-                    'namaProduk' => $produk->namaProduk,
-                    'harga' => $produk->harga,
-                    'stok' => $produk->stok,
-                    'jumlahMinimal' => $produk->jumlahMinimal,
-                    'created_at' => $produk->created_at,
-                    'updated_at' => $produk->updated_at,
-                    'deleted_at' => $produk->deleted_at,
-                ]
+                'status' => 'Success',
+                'produk' => [$this->toJson($produk)],
+                'message' => 'Memulihkan data produk berhasil.'
             ];
         }
         return response()->json($response, $status);
@@ -230,27 +210,20 @@ class ProdukController extends Controller
     {
         $produk = Produk::find($id);
 
-        if ($produk == NULL || $produk->deleted_at != NULL) {
+        if ($produk == NULL || $produk->deleted_at == NULL) {
             $status = 404;
             $response = [
-                'status' => 'Data Not Found',
-                'data' => []
+                'status' => 'Error',
+                'produk' => [],
+                'message' => 'Produk Tidak Ditemukan'
             ];
         } else {
             $produk->delete();
             $status = 200;
             $response = [
-                'message' => 'Success',
-                'data' => [
-                    'idProduk' => $produk->getKey(),
-                    'namaProduk' => $produk->namaProduk,
-                    'harga' => $produk->harga,
-                    'stok' => $produk->stok,
-                    'jumlahMinimal' => $produk->jumlahMinimal,
-                    'created_at' => $produk->created_at,
-                    'updated_at' => $produk->updated_at,
-                    'deleted_at' => $produk->deleted_at,
-                ]
+                'status' => 'Success',
+                'produk' => [$this->toJson($produk)],
+                'message' => 'Hapus data produk permanen berhasil.'
             ];
         }
         return response()->json($response, $status);
@@ -260,11 +233,12 @@ class ProdukController extends Controller
     {
         $produk = Produk::find($id);
 
-        if ($produk == null || $produk->deleted_at != null) {
+        if ($produk == null) {
             $status = 404;
             $response = [
-                'status' => 'Data Not Found',
-                'data' => []
+                'status' => 'Error',
+                'produk' => [],
+                'message' => 'Produk Tidak Ditemukan'
             ];
             return response()->json($response, $status);
         } else {
@@ -298,8 +272,8 @@ class ProdukController extends Controller
     {
 
         $source_pic = $file;
-        $max_width = 500;
-        $max_height = 500;
+        $max_width = 200;
+        $max_height = 200;
 
         list($width, $height, $image_type) = getimagesize($file);
 
@@ -351,10 +325,10 @@ class ProdukController extends Controller
                 break;
             case 2:
                 imagejpeg($tmp, NULL, 100);
-                break; // best quality
+                break;
             case 3:
-                imagepng($tmp, NULL, 0);
-                break; // no compression
+                imagepng($tmp, NULL, 9);
+                break;
             default:
                 echo '';
                 break;
@@ -382,7 +356,24 @@ class ProdukController extends Controller
             else
                 return 'PR' . ($noTerakhir + 1);
         } else {
-            return 'PR' . '0001';
+            return 'PR0001';
         }
+    }
+
+    public function toJson($produks)
+    {
+        $produk = [
+            'idProduk' => $produks->getKey(),
+            'namaProduk' => $produks->namaProduk,
+            'harga' => $produks->harga,
+            'stok' => $produks->stok,
+            'jumlahMinimal' => $produks->jumlahMinimal,
+            'created_at' => $produks->created_at,
+            'updated_at' => $produks->updated_at,
+            'deleted_at' => $produks->deleted_at,
+            'idPegawaiLog' => $produks->idPegawaiLog,
+        ];
+
+        return $produk;
     }
 }

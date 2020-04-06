@@ -65,7 +65,7 @@ class CustomerController extends Controller
             $success = $customer->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $customer
             ];
         } catch (\Illuminate\Database\QueryException $e) {
@@ -101,7 +101,7 @@ class CustomerController extends Controller
                 $success = $customer->save();
                 $status = 200;
                 $response = [
-                    'status' => 'Success',
+                    'message' => 'Success',
                     'data' => $customer
                 ];
             } catch (\Illuminate\Database\QueryException $e) {
@@ -131,7 +131,7 @@ class CustomerController extends Controller
             $customer->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $customer
             ];
         }
@@ -140,7 +140,7 @@ class CustomerController extends Controller
 
     public function restore(Request $request, $id)
     {
-        $customer = Customer::find($id);
+        $customer = Customer::onlyTrashed()->find($id);
 
         if ($customer == NULL) {
             $status = 404;
@@ -156,7 +156,7 @@ class CustomerController extends Controller
             $customer->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $customer
             ];
         }
@@ -165,9 +165,9 @@ class CustomerController extends Controller
 
     public function hapusPermanen($id)
     {
-        $customer = Customer::find($id);
+        $customer = Customer::onlyTrashed()->find($id);
 
-        if ($customer == NULL || $customer->deleted_at != NULL) {
+        if ($customer == NULL) {
             $status = 404;
             $response = [
                 'status' => 'Data Not Found',
@@ -177,7 +177,7 @@ class CustomerController extends Controller
             $customer->delete();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $customer
             ];
         }

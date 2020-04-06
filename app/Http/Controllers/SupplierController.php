@@ -12,7 +12,7 @@ class SupplierController extends Controller
     {
         $supplier = Supplier::all();
         $response = [
-            'status' => 'Success',
+            'message' => 'Success',
             'data' => $supplier
         ];
         return response()->json($response, 200);
@@ -43,7 +43,7 @@ class SupplierController extends Controller
 
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'status' => 'Berhasil',
                 'data' => $supplier
             ];
         }
@@ -64,7 +64,7 @@ class SupplierController extends Controller
             $success = $supplier->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $supplier
             ];
         } catch (\Illuminate\Database\QueryException $e) {
@@ -99,7 +99,7 @@ class SupplierController extends Controller
                 $success = $supplier->save();
                 $status = 200;
                 $response = [
-                    'status' => 'Success',
+                    'message' => 'Success',
                     'data' => $supplier
                 ];
             } catch (\Illuminate\Database\QueryException $e) {
@@ -129,7 +129,7 @@ class SupplierController extends Controller
             $supplier->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $supplier
             ];
         }
@@ -138,7 +138,7 @@ class SupplierController extends Controller
 
     public function restore(Request $request, $id)
     {
-        $supplier = Supplier::find($id);
+        $supplier = Supplier::onlyTrashed()->find($id);
 
         if ($supplier == NULL) {
             $status = 404;
@@ -154,7 +154,7 @@ class SupplierController extends Controller
             $supplier->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $supplier
             ];
         }
@@ -163,19 +163,19 @@ class SupplierController extends Controller
 
     public function hapusPermanen($id)
     {
-        $supplier = Supplier::find($id);
+        $supplier = Supplier::onlyTrashed()->find($id);
 
-        if ($supplier == NULL || $supplier->deleted_at != NULL) {
+        if ($supplier == NULL) {
             $status = 404;
             $response = [
                 'status' => 'Data Not Found',
                 'data' => []
             ];
         } else {
-            $supplier->delete();
+            $supplier->forceDelete();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $supplier
             ];
         }

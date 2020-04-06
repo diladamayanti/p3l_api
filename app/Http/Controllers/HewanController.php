@@ -66,7 +66,7 @@ class HewanController extends Controller
             $success = $hewan->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $hewan
             ];
         } catch (\Illuminate\Database\QueryException $e) {
@@ -102,7 +102,7 @@ class HewanController extends Controller
                 $success = $hewan->save();
                 $status = 200;
                 $response = [
-                    'status' => 'Success',
+                    'message' => 'Success',
                     'data' => $hewan
                 ];
             } catch (\Illuminate\Database\QueryException $e) {
@@ -132,7 +132,7 @@ class HewanController extends Controller
             $hewan->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $hewan
             ];
         }
@@ -141,7 +141,7 @@ class HewanController extends Controller
 
     public function restore(Request $request, $id)
     {
-        $hewan = Hewan::find($id);
+        $hewan = Hewan::onlyTrashed()->find($id);
 
         if ($hewan == NULL) {
             $status = 404;
@@ -157,7 +157,7 @@ class HewanController extends Controller
             $hewan->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $hewan
             ];
         }
@@ -166,9 +166,9 @@ class HewanController extends Controller
 
     public function hapusPermanen($id)
     {
-        $hewan = Hewan::find($id);
+        $hewan = Hewan::onlyTrashed()->find($id);
 
-        if ($hewan == NULL || $hewan->deleted_at != NULL) {
+        if ($hewan == NULL) {
             $status = 404;
             $response = [
                 'status' => 'Data Not Found',
@@ -178,7 +178,7 @@ class HewanController extends Controller
             $hewan->delete();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => $hewan
             ];
         }

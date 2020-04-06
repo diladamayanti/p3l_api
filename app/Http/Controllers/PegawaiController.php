@@ -81,7 +81,7 @@ class PegawaiController extends Controller
                 $success = $pegawai->save();
                 $status = 200;
                 $response = [
-                    'status' => 'Success',
+                    'message' => 'Success',
                     'data' => [
                         'NIP' => $pegawai->NIP,
                         'namaPegawai' => $pegawai->namaPegawai,
@@ -134,7 +134,7 @@ class PegawaiController extends Controller
                 $success = $pegawai->save();
                 $status = 200;
                 $response = [
-                    'status' => 'Success',
+                    'message' => 'Success',
                     'data' => [
                         'NIP' => $pegawai->getKey(),
                         'namaPegawai' => $pegawai->namaPegawai,
@@ -174,7 +174,7 @@ class PegawaiController extends Controller
             $pegawai->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => [
                     'NIP' => $pegawai->getKey(),
                     'namaPegawai' => $pegawai->namaPegawai,
@@ -193,7 +193,7 @@ class PegawaiController extends Controller
 
     public function restore(Request $request, $NIP)
     {
-        $pegawai = Pegawai::find($NIP);
+        $pegawai = Pegawai::onlyTrashed()->find($NIP);
 
         if ($pegawai == NULL) {
             $status = 404;
@@ -209,7 +209,7 @@ class PegawaiController extends Controller
             $pegawai->save();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => [
                     'NIP' => $pegawai->getKey(),
                     'namaPegawai' => $pegawai->namaPegawai,
@@ -228,9 +228,9 @@ class PegawaiController extends Controller
 
     public function hapusPermanen($NIP)
     {
-        $pegawai = Pegawai::find($NIP);
+        $pegawai = Pegawai::onlyTrashed()->find($NIP);
 
-        if ($pegawai == NULL || $pegawai->deleted_at != NULL) {
+        if ($pegawai == NULL) {
             $status = 404;
             $response = [
                 'status' => 'Data Not Found',
@@ -240,7 +240,7 @@ class PegawaiController extends Controller
             $pegawai->delete();
             $status = 200;
             $response = [
-                'status' => 'Success',
+                'message' => 'Success',
                 'data' => [
                     'NIP' => $pegawai->getKey(),
                     'namaPegawai' => $pegawai->namaPegawai,
