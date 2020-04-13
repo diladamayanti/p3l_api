@@ -10,8 +10,7 @@ class PengadaanController extends Controller
 {
     public function index()
     {
-        $pengadaan = Pengadaan::all('noPO', 'tglPengadaan', 'idSupplier', 'status', 'totalHarga', 'created_at', 'updated_at')
-            ->where('deleted_at', null);
+        $pengadaan = Pengadaan::all();
         $response = [
             'status' => 'Success',
             'data' => $pengadaan
@@ -21,7 +20,7 @@ class PengadaanController extends Controller
 
     public function tampilSoftDelete()
     {
-        $pengadaan = Pengadaan::where('created_at', null);
+        $pengadaan = Pengadaan::onlyTrashed();
         $response = [
             'status' => 'Success',
             'data' => $pengadaan
