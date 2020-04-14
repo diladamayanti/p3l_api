@@ -441,7 +441,7 @@ class PegawaiController extends Controller
                 return 'K001';
             }
         }
-    },
+    }
 
     public function uploadImage(Request $request)
     {
