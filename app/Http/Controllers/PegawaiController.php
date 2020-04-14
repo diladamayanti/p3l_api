@@ -407,25 +407,46 @@ class PegawaiController extends Controller
         return $final_image;
     }
 
-    public function generateNIP()
+    public function generateNIP($jabatan)
     {
-        $pegawai = Pegawai::orderBy('created_at', 'desc')->first();
+        $pegawai = Pegawai::where('jabatan', $jabatan)
+            ->orderBy('created_at', 'desc')->first();
 
-        if (isset($pegawai)) {
-            if ($pegawai->NIP == "Owner") {
-                return 'P' . date('y') . '1';
+        if ($jabatan == "Customer Service") {
+            if (isset($pegawai)) {
+                $no = substr($pegawai->NIP, 2);
+
+                if ($no < 9) {
+                    return 'CS' . '00' . ($no + 1);
+                } else if ($no < 99) {
+                    return 'CS' . '0' . ($no + 1);
+                } else {
+                    return 'CS' . ($no + 1);
+                }
+            } else {
+                return 'CS001';
             }
-            $noTerakhir = substr($pegawai->NIP, 2);
-            return 'P' . date('y') . ($noTerakhir + 1);
         } else {
-            return 'Owner';
+            if (isset($pegawai)) {
+                $no = substr($pegawai->NIP, 1);
+
+                if ($no < 9) {
+                    return 'K' . '00' . ($no + 1);
+                } else if ($no < 99) {
+                    return 'K' . '0' . ($no + 1);
+                } else {
+                    return 'K' . ($no + 1);
+                }
+            } else {
+                return 'K001';
+            }
         }
-    }
+    },
 
     public function uploadImage(Request $request)
     {
         $pegawai = new Pegawai;
-        $pegawai->NIP = $this->generateNIP();
+        $pegawai->NIP = $this->generateNIP($request['jabatan']);
         $pegawai->gambar = $this->upload();
         $pegawai->created_at = Carbon::now();
         $pegawai->updated_at = Carbon::now();

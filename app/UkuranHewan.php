@@ -17,4 +17,9 @@ class UkuranHewan extends Model
     {
         return $this->hasOne(Pegawai::class, 'idPegawaiLog');
     }
+
+    public function layanan()
+    {
+        return $this->belongsTo(Layanan::class, 'idUkuran');
+    }
 }

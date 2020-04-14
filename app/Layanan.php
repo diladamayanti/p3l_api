@@ -13,16 +13,6 @@ class Layanan extends Model
     protected $primaryKey = 'idLayanan';
     public $incrementing = false;
 
-    public function pegawai()
-    {
-        return $this->hasOne(Pegawai::class, 'idPegawaiLog');
-    }
-
-    public function jenis()
-    {
-        return $this->hasOne(JenisHewan::class, 'idJenis');
-    }
-
     public function ukuran()
     {
         return $this->hasOne(UkuranHewan::class, 'idUkuran');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Layanan;
+use App\UkuranHewan;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -10,7 +11,9 @@ class LayananController extends Controller
 {
     public function index()
     {
-        $layanan = Layanan::where('deleted_at', null)->get();
+        $layanan = Layanan::join('ukuranhewan', 'layanan.idUkuran', '=', 'ukuranhewan.idUkuran')
+            ->select('layanan.*', 'ukuranhewan.namaUkuran')
+            ->get();
         $response = [
             'status' => 'Success',
             'data' => $layanan
@@ -20,7 +23,9 @@ class LayananController extends Controller
 
     public function tampilSoftDelete()
     {
-        $layanan = Layanan::onlyTrashed()->get();
+        $layanan = Layanan::join('ukuranhewan', 'layanan.idUkuran', '=', 'ukuranhewan.idUkuran')
+            ->select('layanan.*', 'ukuranhewan.namaUkuran')
+            ->onlyTrashed()->get();
         $response = [
             'status' => 'Success',
             'data' => $layanan
