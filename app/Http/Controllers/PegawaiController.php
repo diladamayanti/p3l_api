@@ -56,7 +56,7 @@ class PegawaiController extends Controller
     public function tambah(Request $request)
     {
         $pegawai = new Pegawai;
-        $pegawai->NIP = $this->generateNIP();
+        $pegawai->NIP = $this->generateNIP($request['jabatan']);
         $pegawai->namaPegawai = $request['namaPegawai'];
         $pegawai->alamat = $request['alamat'];
         $pegawai->tglLahir = $request['tglLahir'];
@@ -441,7 +441,7 @@ class PegawaiController extends Controller
                 return 'K001';
             }
         }
-    },
+    }
 
     public function uploadImage(Request $request)
     {

@@ -34,6 +34,20 @@ class ProdukController extends Controller
         return response()->json($response, 200);
     }
 
+    public function tampilMinimal()
+    {
+        $produk = Produk::where('stok', '<=',  'jumlahMinimal')
+            ->whereNull('deleted_at')
+            ->toSql();
+        $response = [
+            'status' => 'Success',
+            'produk' => $produk,
+        ];
+
+        return response()->json($response, 200);
+    }
+
+
     public function cariProduk($cari)
     {
         $produk = Produk::select('idProduk', 'namaProduk', 'harga', 'stok', 'jumlahMinimal', 'created_at', 'updated_at', 'deleted_at', 'idPegawaiLog')
@@ -100,6 +114,7 @@ class ProdukController extends Controller
         }
         return response()->json($response, $status);
     }
+
 
     public function edit(Request $request, $id)
     {

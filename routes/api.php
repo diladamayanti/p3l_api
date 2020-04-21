@@ -13,6 +13,7 @@ Route::get('produk', 'ProdukController@index');
 Route::get('produk/{id}/gambar', 'ProdukController@tampilGambar');
 Route::get('produk/softDelete', 'ProdukController@tampilSoftDelete');
 Route::get('produk/cariProduk/{cari}', 'ProdukController@cariProduk');
+Route::get('produk/minimal', 'ProdukController@tampilMinimal');
 Route::post('produk', 'ProdukController@tambah');
 Route::post('produk/{id}/restore', 'ProdukController@restore');
 Route::post('produk/update/{id}', 'ProdukController@edit');
