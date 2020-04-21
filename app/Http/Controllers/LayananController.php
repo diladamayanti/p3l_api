@@ -62,7 +62,6 @@ class LayananController extends Controller
         $layanan->idLayanan = $this->generateIdLayanan();
         $layanan->namaLayanan = $request['namaLayanan'];
         $layanan->harga = $request['harga'];
-        $layanan->idJenis = $request['idJenis'];
         $layanan->idUkuran = $request['idUkuran'];
         $layanan->created_at = Carbon::now();
         $layanan->updated_at = Carbon::now();
@@ -99,7 +98,6 @@ class LayananController extends Controller
         } else {
             $layanan->namaLayanan = $request['namaLayanan'];
             $layanan->harga = $request['harga'];
-            $layanan->idJenis = $request['idJenis'];
             $layanan->idUkuran = $request['idUkuran'];
             $layanan->updated_at = Carbon::now();
             $layanan->idPegawaiLog = $request['idPegawaiLog'];
